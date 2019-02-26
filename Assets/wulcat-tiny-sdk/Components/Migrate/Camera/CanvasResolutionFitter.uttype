@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "d960786bdbfc471ebe00c76c704878b1",
+    "Name": "CanvasResolutionFitter",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "d960786bdbfc471ebe00c76c704878b1", "Name": "CanvasResolutionFitter" }
+    }
+}]

@@ -1,0 +1,21 @@
+﻿[{
+    "$TypeId": 4,
+    "Id": "0c0d07ab97a14b32b6f328caf9126342",
+    "Name": "RecordGroup",
+    "ExportFlags": 0,
+    "SerializedVersion": 0,
+    "Entities": [
+        { "$TypeId": 9, "Id": "26decae5aa004fe1afeafc7ae94f24b8", "Name": "Record" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "26decae5aa004fe1afeafc7ae94f24b8",
+    "Name": "Record",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 0,
+    "Components": [{
+        "Type": { "Id": "cdf57a519a344c45b48cd4dc55cbed56", "Name": "Record" }
+    }]
+}]

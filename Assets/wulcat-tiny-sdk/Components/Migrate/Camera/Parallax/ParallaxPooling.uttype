@@ -1,0 +1,48 @@
+[{
+    "$TypeId": 3,
+    "Id": "0753dd40179a42b79f35d7a9a38c755d",
+    "Name": "ParallaxPooling",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "Documentation": {
+        "Summary": "Create 3*3 grid and attach references to poolingEntites"
+    },
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "76457826a207415696b81e6a0249de65",
+        "Name": "cameraEntity",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "d3eb984995744fe6b655326bc2ab28c4",
+        "Name": "poolingEntities",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" },
+        "Array": true,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "31d7cb3c1fcc4600b2f89610a88ca609",
+        "Name": "verticalParallax",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "1a88184741814d829e8011e02b992eba",
+        "Name": "horizontalParallax",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "0753dd40179a42b79f35d7a9a38c755d", "Name": "ParallaxPooling" }
+    }
+}]

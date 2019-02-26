@@ -1,0 +1,302 @@
+{
+    "Success": true,
+    "Diagnostics": [],
+    "Systems": [
+        {
+            "Name": "ButtonSystem",
+            "QualifiedName": "game.ButtonSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Button/ButtonSystem.ts",
+                "Line": 2,
+                "Character": 17
+            }
+        },
+        {
+            "Name": "FitScreenLayoutSystem",
+            "QualifiedName": "game.FitScreenLayoutSystem",
+            "Description": "Adjust screen layout to fit any aspect ratio. // try running this only once to increase performance",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/FitScreenLayoutSystem.ts",
+                "Line": 7,
+                "Character": 17
+            }
+        },
+        {
+            "Name": "ScoreSystem",
+            "QualifiedName": "game.ScoreSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Score/ScoreSystem.ts",
+                "Line": 2,
+                "Character": 17
+            }
+        },
+        {
+            "Name": "Time",
+            "QualifiedName": "ut.Time",
+            "Description": "Placeholder system to provide a UnityEngine.Time like API\n\ne.g. \n  let deltaTime = ut.Time.deltaTime();\n  let time = ut.Time.time();",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/Time.ts",
+                "Line": 12,
+                "Character": 17
+            },
+            "ExecuteBefore": [
+                "ut.Shared.UserCodeStart"
+            ]
+        },
+        {
+            "Name": "InitializeSystem",
+            "QualifiedName": "game.InitializeSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/InitializeSystem.ts",
+                "Line": 117,
+                "Character": 17
+            }
+        }
+    ],
+    "Filters": [
+        {
+            "Name": "StaticForce2DFilter",
+            "QualifiedName": "game.StaticForce2DFilter",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
+                "Line": 2,
+                "Character": 17
+            },
+            "Fields": [
+                {
+                    "Name": "position",
+                    "QualifiedName": "ut.Core2D.TransformLocalPosition",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
+                        "Line": 2,
+                        "Character": 63
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                },
+                {
+                    "Name": "force",
+                    "QualifiedName": "game.StaticForce2D",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
+                        "Line": 3,
+                        "Character": 52
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                }
+            ]
+        },
+        {
+            "Name": "DragFilter",
+            "QualifiedName": "game.DragFilter",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                "Line": 2,
+                "Character": 17
+            },
+            "Fields": [
+                {
+                    "Name": "entity",
+                    "QualifiedName": "ut.Entity",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "Line": 2,
+                        "Character": 54
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                },
+                {
+                    "Name": "draggable",
+                    "QualifiedName": "game.Draggable",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "Line": 3,
+                        "Character": 27
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                },
+                {
+                    "Name": "rectTransform",
+                    "QualifiedName": "ut.UILayout.RectTransform",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "Line": 4,
+                        "Character": 35
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                },
+                {
+                    "Name": "interaction",
+                    "QualifiedName": "ut.UIControls.MouseInteraction",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "Line": 5,
+                        "Character": 50
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                },
+                {
+                    "Name": "layerSorting",
+                    "QualifiedName": "ut.Core2D.LayerSorting",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "Line": 6,
+                        "Character": 53
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                }
+            ]
+        }
+    ],
+    "Behaviours": [
+        {
+            "Name": "StaticForce2DBehaviour",
+            "QualifiedName": "game.StaticForce2DBehaviour",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
+                "Line": 6,
+                "Character": 17
+            },
+            "Fields": [
+                {
+                    "Name": "data",
+                    "QualifiedName": "game.StaticForce2DFilter",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
+                        "Line": 6,
+                        "Character": 72
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                }
+            ],
+            "Methods": [
+                "OnEntityUpdate"
+            ]
+        },
+        {
+            "Name": "DragBehaviour",
+            "QualifiedName": "game.DragBehaviour",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                "Line": 9,
+                "Character": 17
+            },
+            "Fields": [
+                {
+                    "Name": "data",
+                    "QualifiedName": "game.DragFilter",
+                    "Description": "",
+                    "Source": {
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "Line": 9,
+                        "Character": 63
+                    },
+                    "IsStatic": false,
+                    "IsReadonly": false,
+                    "IsOptional": false,
+                    "IsPublic": true
+                }
+            ],
+            "Methods": [
+                "OnEntityUpdate"
+            ]
+        }
+    ],
+    "Performance": [
+        {
+            "Key": "tsconfig",
+            "Description": "Time taken to read and parse the given tsconfig.json file",
+            "Duration": 81,
+            "Steps": 1
+        },
+        {
+            "Key": "checksum",
+            "Description": "Time taken to compute the MD5 of all inputs",
+            "Duration": 187,
+            "Steps": 1
+        },
+        {
+            "Key": "compile",
+            "Description": "Time taken to compile the TypeScript program",
+            "Duration": 826,
+            "Steps": 30
+        },
+        {
+            "Key": "emit",
+            "Description": "Time taken to generate and write the JavaScript output",
+            "Duration": 154,
+            "Steps": 2
+        },
+        {
+            "Key": "metadata",
+            "Description": "Time taken to reflect Tiny metadata from the compiled program",
+            "Duration": 8,
+            "Steps": 5
+        }
+    ],
+    "SourceFiles": [
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Button/ButtonSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/CameraFollow.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/FitScreenLayoutSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/ParallaxObjectPoolingBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/ParallaxPoolingBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/ScreenTransitionSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Geometry/Rect.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Math/Mathf.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/CustomPhysics2DBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Score/ScoreSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/PhysicsService.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/Service.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/TransformService.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/ClockSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/Time.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/TimerSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/UIService.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/InitializeSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Library/PackageCache/com.unity.tiny@0.14.1-preview/Runtime/Modules/UTiny.EntityGroup/Scripts/EntityGroup.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Library/PackageCache/com.unity.tiny@0.14.1-preview/Runtime/Modules/UTiny.EntityGroup/Scripts/EntityLookupCache.ts"
+    ],
+    "InputHash": "103a02388e4ca93406cdfad200ead3fd",
+    "GeneratedAt": "Tue Feb 26 2019 11:48:04 GMT+0530 (IST)"
+}
