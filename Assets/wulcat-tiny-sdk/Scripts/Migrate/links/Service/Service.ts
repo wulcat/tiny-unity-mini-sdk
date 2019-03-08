@@ -61,18 +61,34 @@ namespace game {
             return false
         }
 
-
+        // Make sure 
         static streamImageOn(entity : ut.Entity , url : string , name? : string) {
             if(!name)
                 name = this.world.getEntityName(entity)
 
-            let sprite = this.downloadImage(name , url)
+            let streamSprite = this.downloadImage(name , url)
 
             this.world.usingComponentData(entity , [ut.Core2D.Sprite2DRenderer] , (renderer)=>{
-                renderer.sprite = sprite
+                let pixelsToWorldUnits : number
+                let pixelSize : Vector2
+                // Grab the original pixel Units and ratio
+                this.world.usingComponentData(renderer.sprite , [ut.Core2D.Sprite2D] , (sprite)=>{
+                    this.world.usingComponentData(sprite.image , [ut.Core2D.Image2D] , (image)=>{
+                        pixelsToWorldUnits = image.pixelsToWorldUnits
+                        pixelSize = image.imagePixelSize
+                    })
+                })
+                // Assign the grabbed value
+                this.world.usingComponentData(streamSprite , [ut.Core2D.Sprite2D] , (sprite)=>{
+                    this.world.usingComponentData(sprite.image , [ut.Core2D.Image2D] , (image)=>{
+                        image.pixelsToWorldUnits = pixelsToWorldUnits
+                        image.imagePixelSize = pixelSize
+                    })
+                })
+                renderer.sprite = streamSprite
             })
         }
-        
+
         static downloadImage(name : string , url : string) : ut.Entity {
             // Create Holder
             let holder = this.world.createEntity()
