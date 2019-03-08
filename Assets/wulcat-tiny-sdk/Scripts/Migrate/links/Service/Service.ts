@@ -61,7 +61,10 @@ namespace game {
             return false
         }
 
-        // Make sure 
+        // Make sure you keep a reference image before loading a new image on it 
+        // (this grabs the pixelUnit from orginal image and assigns to the downloaded image)
+        // If you want avoid this , you can use game.Service.downloadImage(name,url) and 
+        // assign pixel unit manualy and then set it to sprite
         static streamImageOn(entity : ut.Entity , url : string , name? : string) {
             if(!name)
                 name = this.world.getEntityName(entity)
