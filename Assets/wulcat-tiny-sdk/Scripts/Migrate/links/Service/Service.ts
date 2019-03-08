@@ -61,6 +61,47 @@ namespace game {
             return false
         }
 
+
+        static streamImageOn(entity : ut.Entity , url : string , name? : string) {
+            if(!name)
+                name = this.world.getEntityName(entity)
+
+            let sprite = this.downloadImage(name , url)
+
+            this.world.usingComponentData(entity , [ut.Core2D.Sprite2DRenderer] , (renderer)=>{
+                renderer.sprite = sprite
+            })
+        }
+        
+        static downloadImage(name : string , url : string) : ut.Entity {
+            // Create Holder
+            let holder = this.world.createEntity()
+            this.world.setEntityName(holder , name+"_Holder")
+            this.world.addComponent(holder , ut.Core2D.TransformNode)
+
+            // Create Texture Entity
+            let texture2D = this.world.createEntity()
+            this.world.setEntityName(texture2D , name+"_texture2D") 
+            this.world.addComponent(texture2D , ut.Core2D.Image2DLoadFromFile)
+            this.world.usingComponentData(texture2D , [ut.Core2D.TransformNode , ut.Core2D.Image2DLoadFromFile] , (node , file)=>{
+                node.parent = holder
+                file.imageFile = url
+            })
+            // Load Texture Entity
+            this.world.addComponent(texture2D , ut.Core2D.Image2D)
+
+            // Create Sprite Entity
+            let sprite2D = this.world.createEntity()
+            this.world.setEntityName(sprite2D , name+"_sprite2D")
+            this.world.addComponent(sprite2D , ut.Core2D.Sprite2D)
+            this.world.usingComponentData(sprite2D , [ut.Core2D.TransformNode , ut.Core2D.Sprite2D] , (node , sprite)=>{
+                node.parent = holder
+                sprite.image = texture2D
+                sprite.pivot = new Vector2(0.5,0.5)
+            })
+            return new ut.Entity(sprite2D.index , sprite2D.version)
+        }
+
         // Custom methods to make it simple
         // modify this (0.0)
         static getConfig(world:ut.World) : game.Configuration {
