@@ -178,11 +178,6 @@ namespace game {
             ut.EntityGroup.destroyAll(this.world , "game.OnEndGroup")
 
             // Your Groups
-            ut.EntityGroup.destroyAll(this.world , "game.GroundCrackEffectGroup")
-            ut.EntityGroup.destroyAll(this.world , "game.BasketSplashEffectGroup")
-            ut.EntityGroup.destroyAll(this.world , "game.Danger01Group")
-            ut.EntityGroup.destroyAll(this.world , "game.Item01Group")
-            ut.EntityGroup.destroyAll(this.world , "game.Item02Group")
         }
 
         
