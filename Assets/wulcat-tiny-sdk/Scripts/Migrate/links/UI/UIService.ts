@@ -14,6 +14,18 @@ namespace app {
             return entity
         }
 
+        static anchorTopRight(world : ut.World , entity : ut.Entity , position? : Vector2 , size? : Vector2) : ut.Entity {
+            let rectTransform = world.getComponentData(entity , ut.UILayout.RectTransform)
+
+            // rectTransform.anchorMin = new Vector2(1,1)
+            // rectTransform.anchorMax = new Vector2(1,1)
+            rectTransform.anchoredPosition = position || new Vector2(0,0)
+            rectTransform.sizeDelta = size || new Vector2(200 , 200)
+
+            world.setComponentData(entity , rectTransform)
+            return entity
+        }
+
         static instantiateUI(world : ut.World , entityName : string) : ut.Entity {
             // create ui
             let clone = ut.EntityGroup.instantiate(world , entityName)[0]

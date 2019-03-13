@@ -1,0 +1,26 @@
+﻿[{
+    "$TypeId": 3,
+    "Id": "a2bcbc56aaad46ada27752fa380dcfc9",
+    "Name": "ItemTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "b01e404817394c4fb994558661d16f02",
+        "Name": "originalPosition",
+        "FieldType": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "a2bcbc56aaad46ada27752fa380dcfc9", "Name": "ItemTag" },
+        "Properties": {
+            "originalPosition": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" }
+            }
+        }
+    }
+}]

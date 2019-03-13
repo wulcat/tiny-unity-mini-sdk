@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "d92a92714b0440f2a4ad8963937c555b",
+    "Name": "CameraTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "d92a92714b0440f2a4ad8963937c555b", "Name": "CameraTag" }
+    }
+}]

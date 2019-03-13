@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "9685449a59bb49389093dc61cb76e2ac",
+    "Name": "CloseTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "9685449a59bb49389093dc61cb76e2ac", "Name": "CloseTag" }
+    }
+}]

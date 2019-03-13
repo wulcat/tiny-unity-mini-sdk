@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "383acf019f7b4e829d3fbc415b5daf34",
+    "Name": "RestartTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "383acf019f7b4e829d3fbc415b5daf34", "Name": "RestartTag" }
+    }
+}]

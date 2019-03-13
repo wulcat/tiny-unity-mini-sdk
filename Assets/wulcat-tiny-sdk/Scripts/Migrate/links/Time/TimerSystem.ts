@@ -1,26 +1,28 @@
-// namespace game {
-//     export class TimerSystem extends ut.ComponentSystem {
-//         OnUpdate() : void {
-//             let config = this.world.getConfigData(game.Configuration)
-//             if(!config.active) {
-//                 ut.Time.reset()
-//                 return
-//             }
+namespace game {
+    export class TimerSystem extends ut.ComponentSystem {
+        OnUpdate() : void {
+            // if(game.Service.isPaused) return
+            let config = this.world.getConfigData(game.Configuration)
 
-//             this.world.forEach([game.Timer , ut.Text.Text2DRenderer] , (timer , renderer)=>{
-//                 let time = timer.time 
+            if(!config.active) return
 
-//                 let currentTime = time - ut.Time.time
-//                 renderer.text = parseInt(currentTime.toString()).toString()
-//                 // Once the game is over
-//                 if(currentTime <= 0) {
-//                     config.active = false
-//                     ut.EntityGroup.instantiate(this.world , "game.OnEndGroup")
-//                     ut.EntityGroup.destroyAll(this.world , "game.MainGroup")
-//                 }
-//             })
+            let record = game.Service.getRecord() 
 
-//             this.world.setConfigData(config)
-//         }
-//     }
-// }
+            this.world.forEach([game.Timer , ut.Text.Text2DRenderer] , (timer , renderer)=>{
+                let time = timer.time 
+                time -=  ut.Time.deltaTime
+
+                // Once the game is over
+                if(time <= 0) {
+                    record.live = 0
+                    time = 0
+                }
+
+                renderer.text = time.toFixed(1)+""
+                timer.time = time
+            })
+
+            game.Service.setRecord(record)
+        }
+    }
+}

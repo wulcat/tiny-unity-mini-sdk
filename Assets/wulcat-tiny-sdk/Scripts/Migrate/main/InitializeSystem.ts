@@ -15,7 +15,7 @@ It should not go inside the namespace.
     const w = (window as any);
 
     const initialize_hack = () => {
-        console.log("Initializing HDPI hacks v6 by @abeisgreat");
+        console.log("%c Initializing HDPI hacks" , 'background: #00cc00; color: #ffffff');
         const fakeMouseEventFn = (ev) => {
             const ut_HTML = w.ut._HTML;
             const fakeEvent = {
@@ -106,55 +106,90 @@ It should not go inside the namespace.
         }
     }, 10);
 })();
+
+window.onblur = ()=>{
+    game.Service.setPause = true
+    document.title = "blur"
+}
+window.onfocus = ()=>{
+    game.Service.setPause = false
+    document.title = "focus"
+}
+
 namespace game { 
-    /// <summary>
-    /// Create : 
-    /// 1) game.Config as Configuration file
-    /// 2) Record component as file
-    /// 3) Record entity in Scene and attach Record component
-    /// 
-    /// </summary>
     export class InitializeSystem extends ut.ComponentSystem {
         OnUpdate() :void {
+            // if(game.Service.isPaused) return
+
             let config = game.Service.getConfig(this.world)
             if(config.init) return
 
-            console.log("Initializing Game")
+            if(config.loaded) {
+                console.log("%c Initializing Game" , 'background: #00cc00; color: #ffffff')
 
-            // initialize system
-            let record = game.Service.createRecord()
-            if(!record) throw "Error : There was Error finding Record"
+                // initialize system
+                let record = game.Service.createRecord()
+                if(!record) throw "Error : There was Error finding Record"
 
-            // Initialize the game
-            this.initialize(config , record)
+                // Initialize the game
+                this.initialize(config , record)
 
-            // set initialized & make game playable
-            config.init = true
+                // set initialized & make game playable
+                config.init = true
+                config.playable = false // this allows user to touch once again after game starts
+                game.Service.setRecord(record)
+            }
+            else if(!config.loading) {
+                game.Service.addExplicitScript(UT_ASSETS["androidFunc"] , ()=>{
+                    game.Service.addExplicitScript(UT_ASSETS["iosFunc"] , ()=>{
+                        game.Service.addExplicitScript(UT_ASSETS["assetLoader"] , ()=>{
 
+                        })
+                    })
+                })
+
+                config.loading = true
+            }
+            
             // set the data
             game.Service.setConfig(config)
-            game.Service.setRecord(record)
         }
+        
+        
 
         initialize(config : game.Configuration , record : Record):void {
             this.destroy()
             this.instantiate()            
             this.create()
-            
-
+    
             // SOMEHINGS BUGGY
             setTimeout(this.AlignBounds , 2000 , this.world)
+
+            this.world.forEach([game.Timer] , (timer)=>{
+                timer.time = config.taskCompletionTime
+            })
         }
 
         // Destroy the groups you have created (this method is usefull when we are restarting game)
         destroy() {
-            ut.EntityGroup.destroyAll(this.world , "game.MainGroup")
+            // Main Groups
+            ut.EntityGroup.destroyAll(this.world , "game.MainGroup")            
+            ut.EntityGroup.destroyAll(this.world , "game.OnFailGroup")
+            ut.EntityGroup.destroyAll(this.world , "game.OnEndGroup")
+
+            // Your Groups
+            ut.EntityGroup.destroyAll(this.world , "game.GroundCrackEffectGroup")
+            ut.EntityGroup.destroyAll(this.world , "game.BasketSplashEffectGroup")
+            ut.EntityGroup.destroyAll(this.world , "game.Danger01Group")
+            ut.EntityGroup.destroyAll(this.world , "game.Item01Group")
+            ut.EntityGroup.destroyAll(this.world , "game.Item02Group")
         }
 
+        
         // Instantiate required groups .
         instantiate() {
-            ut.EntityGroup.instantiate(this.world , "game.OnStartGroup")
-            ut.EntityGroup.instantiate(this.world , "game.MainGroup")
+            game.Service.instantiateAndLoadAssets("game.MainGroup")
+            game.Service.instantiateAndLoadAssets("game.GameDemoGroup")
         }
 
         // You custom init

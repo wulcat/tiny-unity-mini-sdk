@@ -74,6 +74,48 @@ namespace app.Service {
             )
         }
 
+        static animatePosition3(world : ut.World , entity : ut.Entity , position : Vector3 , time : number , delay : number , motion : ut.Tweens.TweenFunc , loop : ut.Core2D.LoopMode) {
+            let startPosition = world.getComponentData(entity , ut.Core2D.TransformLocalPosition)
+
+            let positionTween = new ut.Tweens.TweenDesc
+            positionTween.cid = ut.Core2D.TransformLocalScale.cid
+            positionTween.offset = 0
+            positionTween.duration = time
+            positionTween.func = motion == 0 ? ut.Tweens.TweenFunc.Linear : motion
+            positionTween.loop = loop == 0 ? ut.Core2D.LoopMode.Once : loop
+            positionTween.destroyWhenDone = true
+            positionTween.t = delay
+            
+            ut.Tweens.TweenService.addTweenVector3(
+                world ,
+                entity ,
+                startPosition.position ,
+                position ,
+                positionTween
+            )
+        }
+
+        static animateUIposition2(world : ut.World , entity : ut.Entity , position : Vector2 , time : number , delay : number , motion : ut.Tweens.TweenFunc , loop : ut.Core2D.LoopMode) {
+            let startPosition = world.getComponentData(entity , ut.UILayout.RectTransform)
+
+            let positionTween = new ut.Tweens.TweenDesc
+            positionTween.cid = ut.UILayout.RectTransform.cid
+            positionTween.offset = 0
+            positionTween.duration = time
+            positionTween.func = motion == 0 ? ut.Tweens.TweenFunc.Linear : motion
+            positionTween.loop = loop == 0 ? ut.Core2D.LoopMode.Once : loop
+            positionTween.destroyWhenDone = true
+            positionTween.t = delay
+
+            ut.Tweens.TweenService.addTweenVector2(
+                world ,
+                entity ,
+                startPosition.anchoredPosition ,
+                position ,
+                positionTween
+            )
+        }
+
         static animateQuaternion(world : ut.World , entity : ut.Entity , angleInRadians : number , time : number , motion? : ut.Tweens.TweenFunc , loop? : ut.Core2D.LoopMode) {
             let startRotation = world.getComponentData(entity , ut.Core2D.TransformLocalRotation)
 

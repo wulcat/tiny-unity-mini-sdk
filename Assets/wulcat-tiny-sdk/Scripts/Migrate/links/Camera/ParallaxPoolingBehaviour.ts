@@ -8,6 +8,7 @@
 //         data : ParallaxPoolingBehaviourFilter
 
 //         OnEntityUpdate() : void {
+    // if(game.Service.isPaused) return
 //             // Get Camera
 //             let cameraEntity = this.data.parallaxPooling.cameraEntity ,
 //                 cameraPosition = this.world.getComponentData(cameraEntity , ut.Core2D.TransformLocalPosition)

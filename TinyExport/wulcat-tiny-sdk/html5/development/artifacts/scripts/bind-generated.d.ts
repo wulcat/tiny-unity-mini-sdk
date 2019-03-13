@@ -82,6 +82,14 @@ declare namespace game{
         constructor();
         init: boolean;
         active: boolean;
+        playable: boolean;
+        complete: boolean;
+        taskCompletionTime: number;
+        uiState: GameUIStateEnum;
+        loading: boolean;
+        loaded: boolean;
+        stream_sprites: ut.Entity[];
+        paused: boolean;
         static readonly cid: number;
         static readonly _view: any;
         static readonly _isSharedComp: boolean;
@@ -90,6 +98,52 @@ declare namespace game{
         static _toPtr(p: number, v: Configuration): void;
         static _tempHeapPtr(v: Configuration): number;
         static _dtorFn(v: Configuration): void;
+    }
+    class CloseTag extends ut.Component {
+        constructor();
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: CloseTag): CloseTag;
+        static _toPtr(p: number, v: CloseTag): void;
+        static _tempHeapPtr(v: CloseTag): number;
+        static _dtorFn(v: CloseTag): void;
+    }
+    class CrossUITag extends ut.Component {
+        constructor();
+        showing: boolean;
+        hiding: boolean;
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: CrossUITag): CrossUITag;
+        static _toPtr(p: number, v: CrossUITag): void;
+        static _tempHeapPtr(v: CrossUITag): number;
+        static _dtorFn(v: CrossUITag): void;
+    }
+    class RestartTag extends ut.Component {
+        constructor();
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: RestartTag): RestartTag;
+        static _toPtr(p: number, v: RestartTag): void;
+        static _tempHeapPtr(v: RestartTag): number;
+        static _dtorFn(v: RestartTag): void;
+    }
+    class StartTag extends ut.Component {
+        constructor();
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: StartTag): StartTag;
+        static _toPtr(p: number, v: StartTag): void;
+        static _tempHeapPtr(v: StartTag): number;
+        static _dtorFn(v: StartTag): void;
     }
     class Bounds extends ut.Component {
         constructor();
@@ -213,6 +267,29 @@ declare namespace game{
         static _tempHeapPtr(v: ParallaxTag): number;
         static _dtorFn(v: ParallaxTag): void;
     }
+    class ItemTag extends ut.Component {
+        constructor();
+        originalPosition: ut.Math.Vector3;
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: ItemTag): ItemTag;
+        static _toPtr(p: number, v: ItemTag): void;
+        static _tempHeapPtr(v: ItemTag): number;
+        static _dtorFn(v: ItemTag): void;
+    }
+    class PlayerTag extends ut.Component {
+        constructor();
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: PlayerTag): PlayerTag;
+        static _toPtr(p: number, v: PlayerTag): void;
+        static _tempHeapPtr(v: PlayerTag): number;
+        static _dtorFn(v: PlayerTag): void;
+    }
     class CustomRigidbody2D extends ut.Component {
         constructor();
         velocity: ut.Math.Vector3;
@@ -239,17 +316,41 @@ declare namespace game{
         static _tempHeapPtr(v: StaticForce2D): number;
         static _dtorFn(v: StaticForce2D): void;
     }
-    class Record extends ut.Component {
+    class ScoreAmount extends ut.Component {
         constructor();
-        score: number;
+        amount: number;
         static readonly cid: number;
         static readonly _view: any;
         static readonly _isSharedComp: boolean;
         static _size: number;
-        static _fromPtr(p: number, v?: Record): Record;
-        static _toPtr(p: number, v: Record): void;
-        static _tempHeapPtr(v: Record): number;
-        static _dtorFn(v: Record): void;
+        static _fromPtr(p: number, v?: ScoreAmount): ScoreAmount;
+        static _toPtr(p: number, v: ScoreAmount): void;
+        static _tempHeapPtr(v: ScoreAmount): number;
+        static _dtorFn(v: ScoreAmount): void;
+    }
+    class ScoreTag extends ut.Component {
+        constructor();
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: ScoreTag): ScoreTag;
+        static _toPtr(p: number, v: ScoreTag): void;
+        static _tempHeapPtr(v: ScoreTag): number;
+        static _dtorFn(v: ScoreTag): void;
+    }
+    class PoolEntity extends ut.Component {
+        constructor();
+        entities: ut.Entity[];
+        group: string;
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: PoolEntity): PoolEntity;
+        static _toPtr(p: number, v: PoolEntity): void;
+        static _tempHeapPtr(v: PoolEntity): number;
+        static _dtorFn(v: PoolEntity): void;
     }
     class Spawn extends ut.Component {
         constructor();
@@ -273,49 +374,27 @@ declare namespace game{
         static _tempHeapPtr(v: Spawn): number;
         static _dtorFn(v: Spawn): void;
     }
-    class PlayerTag extends ut.Component {
+    class DownloadOnLoad extends ut.Component {
         constructor();
         static readonly cid: number;
         static readonly _view: any;
         static readonly _isSharedComp: boolean;
         static _size: number;
-        static _fromPtr(p: number, v?: PlayerTag): PlayerTag;
-        static _toPtr(p: number, v: PlayerTag): void;
-        static _tempHeapPtr(v: PlayerTag): number;
-        static _dtorFn(v: PlayerTag): void;
+        static _fromPtr(p: number, v?: DownloadOnLoad): DownloadOnLoad;
+        static _toPtr(p: number, v: DownloadOnLoad): void;
+        static _tempHeapPtr(v: DownloadOnLoad): number;
+        static _dtorFn(v: DownloadOnLoad): void;
     }
-    class ScoreTag extends ut.Component {
+    class StreamAssetTag extends ut.Component {
         constructor();
         static readonly cid: number;
         static readonly _view: any;
         static readonly _isSharedComp: boolean;
         static _size: number;
-        static _fromPtr(p: number, v?: ScoreTag): ScoreTag;
-        static _toPtr(p: number, v: ScoreTag): void;
-        static _tempHeapPtr(v: ScoreTag): number;
-        static _dtorFn(v: ScoreTag): void;
-    }
-    class RestartTag extends ut.Component {
-        constructor();
-        static readonly cid: number;
-        static readonly _view: any;
-        static readonly _isSharedComp: boolean;
-        static _size: number;
-        static _fromPtr(p: number, v?: RestartTag): RestartTag;
-        static _toPtr(p: number, v: RestartTag): void;
-        static _tempHeapPtr(v: RestartTag): number;
-        static _dtorFn(v: RestartTag): void;
-    }
-    class StartTag extends ut.Component {
-        constructor();
-        static readonly cid: number;
-        static readonly _view: any;
-        static readonly _isSharedComp: boolean;
-        static _size: number;
-        static _fromPtr(p: number, v?: StartTag): StartTag;
-        static _toPtr(p: number, v: StartTag): void;
-        static _tempHeapPtr(v: StartTag): number;
-        static _dtorFn(v: StartTag): void;
+        static _fromPtr(p: number, v?: StreamAssetTag): StreamAssetTag;
+        static _toPtr(p: number, v: StreamAssetTag): void;
+        static _tempHeapPtr(v: StreamAssetTag): number;
+        static _dtorFn(v: StreamAssetTag): void;
     }
     class Clock extends ut.Component {
         constructor();
@@ -356,6 +435,26 @@ declare namespace game{
         static _toPtr(p: number, v: Draggable): void;
         static _tempHeapPtr(v: Draggable): number;
         static _dtorFn(v: Draggable): void;
+    }
+    class Record extends ut.Component {
+        constructor();
+        score: number;
+        live: number;
+        static readonly cid: number;
+        static readonly _view: any;
+        static readonly _isSharedComp: boolean;
+        static _size: number;
+        static _fromPtr(p: number, v?: Record): Record;
+        static _toPtr(p: number, v: Record): void;
+        static _tempHeapPtr(v: Record): number;
+        static _dtorFn(v: Record): void;
+    }
+    enum GameUIStateEnum {
+        NONE = 0,
+        failure = 1,
+        complete = 2,
+        start = 3,
+        tutorial = 4,
     }
 }
 declare namespace ut{
@@ -494,11 +593,14 @@ declare namespace ut{
         [module: string]: any;
         game: {
             [data: string]: EntityGroupData;
-            MainGroup: EntityGroupData;
-            OnEndGroup: EntityGroupData;
-            OnStartGroup: EntityGroupData;
+            CrossButtonGroup: EntityGroupData;
             RecordGroup: EntityGroupData;
             ScreenTransition: EntityGroupData;
+            GameDemoGroup: EntityGroupData;
+            MainGroup: EntityGroupData;
+            OnEndGroup: EntityGroupData;
+            OnFailGroup: EntityGroupData;
+            OnStartGroup: EntityGroupData;
         }
     }
 }

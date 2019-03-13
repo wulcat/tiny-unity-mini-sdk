@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "be8afcc95b754783960fbad42b946d6e",
+    "Name": "StreamAssetTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "be8afcc95b754783960fbad42b946d6e", "Name": "StreamAssetTag" }
+    }
+}]

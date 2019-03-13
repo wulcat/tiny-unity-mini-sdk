@@ -17,6 +17,69 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var app;
+(function (app) {
+    var Communication = /** @class */ (function () {
+        function Communication() {
+        }
+        Communication.getMobileOperatingSystem = function () {
+            var userAgent = navigator.userAgent || navigator.vendor; //|| window.opera;
+            // Windows Phone must come first because its UA also contains "Android"
+            if (/windows phone/i.test(userAgent)) {
+                return "Windows Phone";
+            }
+            else if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+            else if (!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)) {
+                return "iOS";
+            }
+            // // iOS detection from: http://stackoverflow.com/a/9039885/177710
+            // if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            //     return "iOS";
+            // }
+            return "unknown";
+        };
+        Communication.createFunc = function (func) {
+            var data = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                data[_i - 1] = arguments[_i];
+            }
+            var createCall = func + "(";
+            for (var i = 0; i < data.length; i++) {
+                if (i != 0)
+                    createCall += ",";
+                createCall += "data[" + i + "]";
+            }
+            createCall += ")";
+            return createCall;
+        };
+        Communication.sendMessage = function (func) {
+            var data = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                data[_i - 1] = arguments[_i];
+            }
+            var createCall = "";
+            switch (this.getMobileOperatingSystem()) {
+                case "Android":
+                    func += "Android";
+                    createCall = this.createFunc.apply(this, [func].concat(data));
+                    eval(createCall);
+                    break;
+                case "iOS":
+                    func += "iOS";
+                    createCall = this.createFunc.apply(this, [func].concat(data));
+                    eval(createCall);
+                    break;
+                default:
+                    console.warn("%c No Cross Communication Allowed", 'background: #ffcc00; color: #ffffff');
+                    break;
+            }
+        };
+        return Communication;
+    }());
+    app.Communication = Communication;
+})(app || (app = {}));
 var game;
 (function (game) {
     var ButtonSystem = /** @class */ (function (_super) {
@@ -26,20 +89,68 @@ var game;
         }
         ButtonSystem.prototype.OnUpdate = function () {
             var _this = this;
+            if (game.Service.isPaused)
+                return;
             var config = game.Service.getConfig(this.world);
+            // Start Game
             this.world.forEach([game.StartTag, ut.UIControls.MouseInteraction], function (tag, interaction) {
                 if (interaction.clicked) {
-                    ut.EntityGroup.destroyAll(_this.world, "game.OnStartGroup");
-                    config.active = true;
+                    if (config.loaded) {
+                        ut.EntityGroup.destroyAll(_this.world, "game.OnStartGroup");
+                        // Set game to interactable
+                        config.playable = true;
+                        config.uiState = game.GameUIStateEnum.tutorial;
+                        console.log("%c Tutorial Screen", 'background: #33ccff; color: #ffffff');
+                    }
                 }
             });
+            // Restart Game
             this.world.forEach([game.RestartTag, ut.UIControls.MouseInteraction], function (tag, interaction) {
                 if (interaction.clicked) {
-                    ut.EntityGroup.destroyAll(_this.world, "game.OnEndGroup");
                     config.init = false;
+                    config.playable = true;
+                    var playableUpdateLoop_1 = function () {
+                        config = game.Service.getConfig(this.world);
+                        if (config.init) {
+                            config.playable = true;
+                            config.uiState = game.GameUIStateEnum.tutorial;
+                            console.log("%c Tutorial Screen", 'background: #33ccff; color: #ffffff');
+                            game.Service.setConfig(config);
+                        }
+                        else
+                            setTimeout(playableUpdateLoop_1, 10);
+                    }.bind(_this);
+                    setTimeout(playableUpdateLoop_1, 400);
                 }
             });
+            // Finish Game
+            this.world.forEach([game.CloseTag, ut.UIControls.MouseInteraction], function (tag, interaction) {
+                if (interaction.clicked) {
+                    // Kill the game
+                    app.Communication.sendMessage("onQuit");
+                }
+            });
+            // Start the game after intial demo for how to play
+            if (config.init && !config.active && config.playable) {
+                if (ut.Core2D.Input.isTouchSupported() && ut.Core2D.Input.touchCount() > 0) {
+                    var touch = ut.Core2D.Input.getTouch(0);
+                    switch (touch.phase) {
+                        case ut.Core2D.TouchState.Began:
+                            this.Start(config);
+                            break;
+                    }
+                }
+                else if (ut.Core2D.Input.getMouseButtonDown(0)) {
+                    this.Start(config);
+                }
+            }
             game.Service.setConfig(config);
+        };
+        ButtonSystem.prototype.Start = function (config) {
+            config.active = true;
+            config.uiState = game.GameUIStateEnum.NONE;
+            console.log("%c Empty Screen", 'background: #33ccff; color: #ffffff');
+            ut.EntityGroup.destroyAll(this.world, "game.GameDemoGroup");
         };
         return ButtonSystem;
     }(ut.ComponentSystem));
@@ -49,6 +160,7 @@ var game;
 //     // NOTE: Work in progress
 //     export class CameraFollow extends ut.ComponentSystem {
 //         OnUpdate() : void {
+// if(game.Service.isPaused) return
 //             this.world.forEach([game.CameraTag , ut.Entity , game.CameraFollowData , ut.Core2D.TransformLocalPosition] , (tag , entity , data , position)=>{
 //                 let targetPosition = this.world.getComponentData(data.target , ut.Core2D.TransformLocalPosition).position
 //                 // NOTE: SOMETHING ELSE WAS ALSO CONTANSTATNLY SETTING THE VALUE IN OTHER FRAME TO PLAYERS POSITION
@@ -72,6 +184,8 @@ var game;
         }
         FitScreenLayoutSystem.prototype.OnUpdate = function () {
             var _this = this;
+            if (game.Service.isPaused)
+                return;
             var displayInfo = this.world.getConfigData(ut.Core2D.DisplayInfo);
             var aspectRatio = displayInfo.height / displayInfo.width;
             var referenceRatio = 16 / 9;
@@ -110,6 +224,7 @@ var game;
 //     export class ParallaxObjectPoolingBehaviour extends ut.ComponentBehaviour {
 //         data : ParallaxObjectPoolingBehaviourFilter
 //         OnEntityUpdate() : void {
+// if(game.Service.isPaused) return
 //             let target = this.data.parallaxObjectPooling.cameraEntity ,
 //                 bounds = app.Service.TransformService.getScreenToWorldRect(this.world , target)
 //             let poolingEntities = this.data.parallaxObjectPooling.poolingEntities ,
@@ -139,6 +254,7 @@ var game;
 //     export class ParallaxPoolingBehaviour extends ut.ComponentBehaviour {
 //         data : ParallaxPoolingBehaviourFilter
 //         OnEntityUpdate() : void {
+// if(game.Service.isPaused) return
 //             // Get Camera
 //             let cameraEntity = this.data.parallaxPooling.cameraEntity ,
 //                 cameraPosition = this.world.getComponentData(cameraEntity , ut.Core2D.TransformLocalPosition)
@@ -193,6 +309,7 @@ var game;
 //     @ut.executeBefore(ut.Shared.RenderingFence)
 //     export class UpdateScreenTransition extends ut.ComponentSystem {
 //         OnUpdate():void {
+// if(game.Service.isPaused) return
 //             let deltaTime = this.scheduler.deltaTime();
 //             let entitiesToDestroy: ut.Entity[] = [];
 //             this.world.forEach([ut.Entity, game.ScreenTransition], (entity, screenTransition) => {
@@ -351,6 +468,7 @@ var app;
 //     export class CustomPhysics2DBehaviour extends ut.ComponentBehaviour {
 //         data : CustomPhysics2DFilter
 //         OnEntityUpdate() :void {
+// if(game.Service.isPaused) return
 //             let localPosition = this.data.position.position
 //             let rigidbody = this.data.rigidbody ,
 //                 localVelocity = rigidbody.velocity
@@ -394,6 +512,8 @@ var game;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         StaticForce2DBehaviour.prototype.OnEntityUpdate = function () {
+            if (game.Service.isPaused)
+                return;
             var localPosition = this.data.position.position, localVelocity = new Vector3(this.data.force.velocity.x, this.data.force.velocity.y);
             localVelocity = localPosition.add(localVelocity.multiplyScalar(ut.Time.deltaTime));
             this.data.position.position = localVelocity;
@@ -410,12 +530,16 @@ var game;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         ScoreSystem.prototype.OnUpdate = function () {
+            // if(game.Service.isPaused) return
             var config = this.world.getConfigData(game.Configuration);
             if (!config.init)
                 return;
             var record = game.Service.getRecord();
             this.world.forEach([game.ScoreTag, ut.Text.Text2DRenderer], function (tag, renderer) {
-                renderer.text = "Score : " + record.score.toString();
+                if (config.active)
+                    renderer.text = "  Score : " + record.score.toString();
+                else
+                    renderer.text = record.score.toString();
             });
             this.world.setConfigData(config);
         };
@@ -423,6 +547,35 @@ var game;
     }(ut.ComponentSystem));
     game.ScoreSystem = ScoreSystem;
 })(game || (game = {}));
+var ut;
+(function (ut) {
+    var JsonUtility = /** @class */ (function () {
+        function JsonUtility() {
+        }
+        JsonUtility.loadAssetAsync = function (assetName, callback) {
+            this.loadAsync(UT_ASSETS[assetName], callback);
+        };
+        JsonUtility.loadAsync = function (url, callback) {
+            var xobj = new XMLHttpRequest();
+            xobj.open('GET', url, true);
+            xobj.onreadystatechange = function () {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                if (xobj.readyState == 4 && xobj.status == 200) {
+                    try {
+                        // callback(null , JSON.parse(xobj.responseText))   
+                        callback(null, xobj.responseText);
+                    }
+                    catch (e) {
+                        console.error(e);
+                    }
+                }
+            };
+            xobj.send(null);
+        };
+        return JsonUtility;
+    }());
+    ut.JsonUtility = JsonUtility;
+})(ut || (ut = {}));
 var app;
 (function (app) {
     var Service;
@@ -449,116 +602,6 @@ var app;
         Service.PhysicsService = PhysicsService;
     })(Service = app.Service || (app.Service = {}));
 })(app || (app = {}));
-var game;
-(function (game) {
-    var Service = /** @class */ (function () {
-        function Service() {
-        }
-        Service.getWorld = function () {
-            return game.Service.world;
-        };
-        Service.getCamera = function () {
-            return game.Service.camera;
-        };
-        // If it already exists it destroys it and creates new .
-        // Use full for initializing method or restarting the game
-        Service.createRecord = function () {
-            var world = game.Service.world;
-            ut.EntityGroup.destroyAll(world, "game.RecordGroup");
-            game.Service.record = null;
-            game.Service.record = ut.EntityGroup.instantiate(world, "game.RecordGroup")[0];
-            return world.getComponentData(game.Service.record, game.Record);
-        };
-        Service.getRecord = function () {
-            var world = game.Service.world;
-            if (!world.exists(game.Service.record)) {
-                game.Service.record = world.getEntityByName("Record");
-                if (game.Service.record == null || game.Service.record.isNone()) {
-                    game.Service.record == null;
-                }
-            }
-            return world.getComponentData(game.Service.record, game.Record);
-        };
-        Service.setRecord = function (data) {
-            var world = game.Service.world;
-            if (!world.exists(game.Service.record)) {
-                game.Service.record = world.getEntityByName("Record");
-                if (game.Service.record == null) {
-                    game.Service.record = null;
-                    return null;
-                }
-            }
-            world.setComponentData(game.Service.record, data);
-            return data;
-        };
-        // Method returns the entity is present in current world
-        Service.exists = function (world, entity) {
-            if (entity.isNone() || entity.index == 0 || entity.version == 0)
-                return false;
-            if (!world.exists(entity))
-                return false;
-            return true;
-        };
-        Service.sameEntity = function (one, two) {
-            if (one.index == two.index && one.version == two.version)
-                return true;
-            return false;
-        };
-        // Custom methods to make it simple
-        // modify this (0.0)
-        Service.getConfig = function (world) {
-            game.Service.world = world;
-            game.Service.camera = world.getEntityByName("Camera");
-            return world.getConfigData(game.Configuration);
-        };
-        Service.setConfig = function (config) {
-            game.Service.world.setConfigData(config);
-        };
-        // Create a good method on this topic
-        Service.mouseButtonDownOnEntity = function () {
-            if (ut.Core2D.Input.getMouseButtonDown(0)) {
-                var mousePos = ut.Core2D.Input.getWorldInputPosition(this.world);
-                var hit = ut.HitBox2D.HitBox2DService.hitTest(game.Service.world, mousePos, game.Service.camera);
-                if (!hit.entityHit.isNone()) {
-                    return hit.entityHit;
-                }
-            }
-            return ut.NONE;
-        };
-        // Create a good method on this topic
-        Service.mouseButtonOnEntity = function () {
-            if (ut.Core2D.Input.isTouchSupported() && ut.Core2D.Input.touchCount() > 0) {
-                var touch = ut.Core2D.Input.getTouch(0);
-                // switch(touch.phase) {
-                // case ut.Core2D.TouchState.Moved :
-                var touchPos = app.Service.TransformService.getUniversalTouchWorldPosition();
-                var hit = ut.HitBox2D.HitBox2DService.hitTest(game.Service.world, touchPos, game.Service.camera);
-                if (!hit.entityHit.isNone())
-                    return hit.entityHit;
-                // break
-                // }
-            }
-            else if (ut.Core2D.Input.getMouseButton(0)) {
-                var mousePos = ut.Core2D.Input.getWorldInputPosition(this.world);
-                var hit = ut.HitBox2D.HitBox2DService.hitTest(game.Service.world, mousePos, game.Service.camera);
-                if (!hit.entityHit.isNone())
-                    return hit.entityHit;
-            }
-            return ut.NONE;
-        };
-        Service.showOnEndGroup = function (time) {
-            var _this = this;
-            setTimeout(function () {
-                ut.EntityGroup.instantiate(_this.world, "game.OnEndGroup");
-            }, time);
-        };
-        Service = __decorate([
-            ut.requiredComponents(game.Record)
-        ], Service);
-        return Service;
-    }());
-    game.Service = Service;
-})(game || (game = {}));
 var app;
 (function (app) {
     var Service;
@@ -617,6 +660,30 @@ var app;
                 scaleTween.t = delay;
                 ut.Tweens.TweenService.addTweenVector3(world, entity, startSize.scale, size, scaleTween);
             };
+            TransformService.animatePosition3 = function (world, entity, position, time, delay, motion, loop) {
+                var startPosition = world.getComponentData(entity, ut.Core2D.TransformLocalPosition);
+                var positionTween = new ut.Tweens.TweenDesc;
+                positionTween.cid = ut.Core2D.TransformLocalScale.cid;
+                positionTween.offset = 0;
+                positionTween.duration = time;
+                positionTween.func = motion == 0 ? ut.Tweens.TweenFunc.Linear : motion;
+                positionTween.loop = loop == 0 ? ut.Core2D.LoopMode.Once : loop;
+                positionTween.destroyWhenDone = true;
+                positionTween.t = delay;
+                ut.Tweens.TweenService.addTweenVector3(world, entity, startPosition.position, position, positionTween);
+            };
+            TransformService.animateUIposition2 = function (world, entity, position, time, delay, motion, loop) {
+                var startPosition = world.getComponentData(entity, ut.UILayout.RectTransform);
+                var positionTween = new ut.Tweens.TweenDesc;
+                positionTween.cid = ut.UILayout.RectTransform.cid;
+                positionTween.offset = 0;
+                positionTween.duration = time;
+                positionTween.func = motion == 0 ? ut.Tweens.TweenFunc.Linear : motion;
+                positionTween.loop = loop == 0 ? ut.Core2D.LoopMode.Once : loop;
+                positionTween.destroyWhenDone = true;
+                positionTween.t = delay;
+                ut.Tweens.TweenService.addTweenVector2(world, entity, startPosition.anchoredPosition, position, positionTween);
+            };
             TransformService.animateQuaternion = function (world, entity, angleInRadians, time, motion, loop) {
                 var startRotation = world.getComponentData(entity, ut.Core2D.TransformLocalRotation);
                 var rotateTween = new ut.Tweens.TweenDesc;
@@ -634,89 +701,114 @@ var app;
         Service.TransformService = TransformService;
     })(Service = app.Service || (app.Service = {}));
 })(app || (app = {}));
-// namespace game {
-//     export class SpawnFilter extends ut.EntityFilter {
-//         spawn : game.Spawn
-//     }
-//     // FIXME: Complete the script
-//     export class SpawnBehaviour extends ut.ComponentBehaviour {
-//         data : SpawnFilter
-//         OnEntityEnable() {
-//             let config = game.Service.getConfig(this.world)
-//             // let config = game.Service.getConfig(this.world)
-//             let screenBound = app.Service.TransformService.getScreenToWorldRect(this.world , game.Service.getCamera())
-//             // set the min & max x of screen in world position
-//             this.data.spawn.minX = screenBound.min.x
-//             this.data.spawn.maxX = screenBound.max.x
-//             this.data.spawn.minY = screenBound.min.y
-//             this.data.spawn.maxY = screenBound.max.y    
-//         }
-//         OnEntityUpdate() {
-//             let config = game.Service.getConfig(this.world)
-//             if(!config.active) return
-//             let spawn = this.data.spawn        
-//             let time = spawn.time 
-//             let delay = spawn.delay
-//             time -= ut.Time.deltaTime
-//             // create point entity after delay
-//             if(time < 0) {
-//                 // next time to spawn again
-//                 time += delay
-//                 // get the entity groups to be instantiated
-//                 let randEntityGroups = this.data.spawn.spawnEntityGroups
-//                 let randPointIndex = app.Mathf.getRandomInt(0 , randEntityGroups.length-1)
-//                 if(randPointIndex >= 0) {
-//                     // instantiate
-//                     let clone = ut.EntityGroup.instantiate(this.world , randEntityGroups[randPointIndex])[0]
-//                     // Align the position randomly on sides
-//                     if(spawn.spawnHorizontally && spawn.spawnVertically) {
-//                         let randPosition = app.Mathf.getRandomInt(0,9) >= 5 ? true : false
-//                         if(randPosition) 
-//                             this.setPositionHorizontally(clone , spawn)
-//                         else 
-//                             this.setPositionVertically(clone , spawn)
-//                     }
-//                     else {
-//                         if(spawn.spawnHorizontally) {
-//                             this.setPositionHorizontally(clone , spawn)
-//                         }
-//                         else if (spawn.spawnVertically) {
-//                             this.setPositionVertically(clone , spawn)
-//                         }
-//                     }
-//                     // reduce delay every new entity create
-//                     if(spawn.exponentialDelay && spawn.delay > spawn.leastDelay)
-//                         spawn.delay -= ut.Time.deltaTime
-//                 }
-//             }
-//             spawn.time = time 
-//         }
-//         setPositionVertically(clone : ut.Entity , spawn : game.Spawn) {
-//         }
-//         setPositionHorizontally(clone : ut.Entity , spawn : game.Spawn) {
-//             let epsilonBoundary = 0.1 ,
-//                 signValueMin = app.Mathf.getSign(spawn.minX) , 
-//                 signValueMax = app.Mathf.getSign(spawn.maxX)
-//             this.world.usingComponentData(clone , [ut.HitBox2D.RectHitBox2D , ut.Core2D.TransformLocalPosition] , (rectHitBox , position)=>{
-//                 let box = rectHitBox.box ,
-//                     width = box._width/2
-//                 let randX = app.Mathf.getRandomFloat(  signValueMin * (Math.abs(spawn.minX) - width - epsilonBoundary) ,
-//                                                             signValueMax * (Math.abs(spawn.maxX) - width - epsilonBoundary) )
-//                 position.position = new Vector3(randX , position.position.y)
-//             })
-//             this.world.usingComponentData(clone , [ut.Physics2D.BoxCollider2D , ut.Core2D.TransformLocalPosition] , (boxCollider , position)=>{
-//                 let size = boxCollider.size ,
-//                     width = size.x/2
-//                 let randX = app.Mathf.getRandomFloat(  signValueMin * (Math.abs(spawn.minX) - width - epsilonBoundary) ,
-//                                                             signValueMax * (Math.abs(spawn.maxX) - width - epsilonBoundary) )
-//                 position.position = new Vector3(randX , position.position.y)
-//             })
-//         }
-//     }
-// }
+var game;
+(function (game) {
+    var SpawnFilter = /** @class */ (function (_super) {
+        __extends(SpawnFilter, _super);
+        function SpawnFilter() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        SpawnFilter = __decorate([
+            ut.requiredComponents(game.PoolEntity)
+        ], SpawnFilter);
+        return SpawnFilter;
+    }(ut.EntityFilter));
+    game.SpawnFilter = SpawnFilter;
+    // FIXME: Complete the script
+    var SpawnBehaviour = /** @class */ (function (_super) {
+        __extends(SpawnBehaviour, _super);
+        function SpawnBehaviour() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        SpawnBehaviour.prototype.OnEntityEnable = function () {
+            var config = game.Service.getConfig(this.world);
+            // let config = game.Service.getConfig(this.world)
+            var screenBound = app.Service.TransformService.getScreenToWorldRect(this.world, game.Service.getCamera());
+            // set the min & max x of screen in world position
+            this.data.spawn.minX = screenBound.min.x;
+            this.data.spawn.maxX = screenBound.max.x;
+            this.data.spawn.minY = screenBound.min.y;
+            this.data.spawn.maxY = screenBound.max.y;
+        };
+        SpawnBehaviour.prototype.OnEntityUpdate = function () {
+            // if(game.Service.isPaused) return
+            var config = game.Service.getConfig(this.world);
+            if (!config.active)
+                return;
+            var spawn = this.data.spawn;
+            var time = spawn.time;
+            var delay = spawn.delay;
+            time -= ut.Time.deltaTime;
+            // create point entity after delay
+            if (time < 0) {
+                // next time to spawn again
+                time += delay;
+                // get the entity groups to be instantiated
+                var randEntityGroups = this.data.spawn.spawnEntityGroups;
+                var randPointIndex = app.Mathf.getRandomInt(0, randEntityGroups.length - 1);
+                if (randPointIndex >= 0) {
+                    // instantiate
+                    var entities_1 = this.data.pool.entities;
+                    var clone = ut.NONE;
+                    // Find a disabled entity for reuse
+                    for (var i = 0; i < entities_1.length; i++) {
+                        if (this.world.hasComponent(entities_1[i], ut.Disabled)) {
+                            clone = entities_1[i];
+                            this.world.removeComponent(clone, ut.Disabled);
+                        }
+                    }
+                    // Check if we have found the match or not
+                    if (clone.isNone()) {
+                        clone = ut.EntityGroup.instantiate(this.world, randEntityGroups[randPointIndex])[0];
+                        this.world.setEntityName(clone, randPointIndex + "-" + this.data.pool.entities.length);
+                        this.data.pool.entities.push(new ut.Entity(clone.index, clone.version));
+                    }
+                    // Align the position randomly on sides
+                    if (spawn.spawnHorizontally && spawn.spawnVertically) {
+                        var randPosition = app.Mathf.getRandomInt(0, 9) >= 5 ? true : false;
+                        if (randPosition)
+                            this.setPositionHorizontally(clone, spawn);
+                        else
+                            this.setPositionVertically(clone, spawn);
+                    }
+                    else {
+                        if (spawn.spawnHorizontally) {
+                            this.setPositionHorizontally(clone, spawn);
+                        }
+                        else if (spawn.spawnVertically) {
+                            this.setPositionVertically(clone, spawn);
+                        }
+                    }
+                    // reduce delay every new entity create
+                    if (spawn.exponentialDelay && spawn.delay > spawn.leastDelay)
+                        spawn.delay -= ut.Time.deltaTime;
+                }
+            }
+            spawn.time = time;
+        };
+        SpawnBehaviour.prototype.setPositionVertically = function (clone, spawn) {
+        };
+        SpawnBehaviour.prototype.setPositionHorizontally = function (clone, spawn) {
+            var epsilonBoundary = 0.1, signValueMin = app.Mathf.getSign(spawn.minX), signValueMax = app.Mathf.getSign(spawn.maxX);
+            this.world.usingComponentData(clone, [ut.HitBox2D.RectHitBox2D, ut.Core2D.TransformLocalPosition], function (rectHitBox, position) {
+                var box = rectHitBox.box, width = box._width / 2;
+                var randX = app.Mathf.getRandomFloat(signValueMin * (Math.abs(spawn.minX) - width - epsilonBoundary), signValueMax * (Math.abs(spawn.maxX) - width - epsilonBoundary));
+                position.position = new Vector3(randX, spawn.maxY);
+            });
+            this.world.usingComponentData(clone, [ut.Physics2D.BoxCollider2D, ut.Core2D.TransformLocalPosition], function (boxCollider, position) {
+                var size = boxCollider.size, width = size.x / 2;
+                var randX = app.Mathf.getRandomFloat(signValueMin * (Math.abs(spawn.minX) - width - epsilonBoundary), signValueMax * (Math.abs(spawn.maxX) - width - epsilonBoundary));
+                position.position = new Vector3(randX, spawn.maxY);
+            });
+        };
+        return SpawnBehaviour;
+    }(ut.ComponentBehaviour));
+    game.SpawnBehaviour = SpawnBehaviour;
+})(game || (game = {}));
 // namespace game {
 //     export class ClockSystem extends ut.ComponentSystem {
 //         OnUpdate() : void {
+// if(game.Service.isPaused) return
 //             let config = this.world.getConfigData(game.Configuration)
 //             if(!config.active) {
 //                 ut.Time.reset()
@@ -747,6 +839,61 @@ var app;
 //         }
 //     }
 // }
+var game;
+(function (game) {
+    var CrossButtonSystem = /** @class */ (function (_super) {
+        __extends(CrossButtonSystem, _super);
+        function CrossButtonSystem() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        CrossButtonSystem.prototype.OnUpdate = function () {
+            // if(game.Service.isPaused) return
+            var config = game.Service.getConfig(this.world);
+            // Once game time passes 30 secs we set game to complete and pop up a close button
+            if (ut.Time.time >= config.taskCompletionTime && !config.complete) {
+                config.complete = true;
+                this.instantiateCrossButtonUI();
+            }
+            // Animation
+            this.animateCrossButtonUI();
+            // Apply changes
+            game.Service.setConfig(config);
+        };
+        CrossButtonSystem.prototype.instantiateCrossButtonUI = function () {
+            var _this = this;
+            ut.EntityGroup.instantiate(this.world, "game.CrossButtonGroup");
+            this.world.forEach([game.CrossUITag, ut.Entity, ut.UILayout.RectTransform], function (tag, entity, rect) {
+                app.UIService.anchorTopRight(_this.world, entity, new Vector2(350, -90), new Vector2(1, 1));
+            });
+        };
+        CrossButtonSystem.prototype.animateCrossButtonUI = function () {
+            var _this = this;
+            this.world.forEach([ut.Entity, game.CrossUITag, ut.UILayout.RectTransform], function (entity, tag, rect) {
+                var position = rect.anchoredPosition;
+                if (tag.showing) {
+                    app.UIService.anchorTopRight(_this.world, entity, position.lerp(new Vector2(60, -90), ut.Time.deltaTime * 2), new Vector2(1, 1));
+                    if (position.x < 121) {
+                        tag.showing = false;
+                        // Wait for a while before hiding
+                        setTimeout(function (entity) {
+                            this.world.usingComponentData(entity, [game.CrossUITag], function (tag) {
+                                tag.hiding = true;
+                            });
+                        }.bind(_this), 1000, new ut.Entity(entity.index, entity.version));
+                    }
+                }
+                if (tag.hiding) {
+                    app.UIService.anchorTopRight(_this.world, entity, position.lerp(new Vector2(260, -90), ut.Time.deltaTime * 2), new Vector2(1, 1));
+                    if (position.x > 260 && position.x < 261) {
+                        tag.hiding = false;
+                    }
+                }
+            });
+        };
+        return CrossButtonSystem;
+    }(ut.ComponentSystem));
+    game.CrossButtonSystem = CrossButtonSystem;
+})(game || (game = {}));
 var ut;
 (function (ut) {
     /**
@@ -781,7 +928,9 @@ var ut;
             Time_1._time = 0;
         };
         Time.prototype.OnUpdate = function () {
-            var dt = this.scheduler.deltaTime();
+            // if(game.Service.isPaused) return
+            // let dt = this.scheduler.deltaTime();
+            var dt = 0.02;
             Time_1._deltaTime = dt;
             Time_1._time += dt;
         };
@@ -795,120 +944,228 @@ var ut;
     }(ut.ComponentSystem));
     ut.Time = Time;
 })(ut || (ut = {}));
+var game;
+(function (game) {
+    var TimerSystem = /** @class */ (function (_super) {
+        __extends(TimerSystem, _super);
+        function TimerSystem() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TimerSystem.prototype.OnUpdate = function () {
+            // if(game.Service.isPaused) return
+            var config = this.world.getConfigData(game.Configuration);
+            if (!config.active)
+                return;
+            var record = game.Service.getRecord();
+            this.world.forEach([game.Timer, ut.Text.Text2DRenderer], function (timer, renderer) {
+                var time = timer.time;
+                time -= ut.Time.deltaTime;
+                // Once the game is over
+                if (time <= 0) {
+                    record.live = 0;
+                    time = 0;
+                }
+                renderer.text = time.toFixed(1) + "";
+                timer.time = time;
+            });
+            game.Service.setRecord(record);
+        };
+        return TimerSystem;
+    }(ut.ComponentSystem));
+    game.TimerSystem = TimerSystem;
+})(game || (game = {}));
+var game;
+(function (game) {
+    var DragService = /** @class */ (function () {
+        function DragService() {
+        }
+        DragService.getDrag = function () {
+            return this.currentDrag;
+        };
+        DragService.setDrag = function (drag) {
+            this.currentDrag = drag;
+        };
+        DragService.currentDrag = ut.NONE;
+        return DragService;
+    }());
+    game.DragService = DragService;
+})(game || (game = {}));
+var game;
+(function (game) {
+    var DragSystem = /** @class */ (function (_super) {
+        __extends(DragSystem, _super);
+        function DragSystem() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        DragSystem.prototype.OnUpdate = function () {
+            var _this = this;
+            // if(game.Service.isPaused) return
+            var config = game.Service.getConfig(this.world);
+            var record = game.Service.getRecord();
+            if (record.live <= 0) {
+                return;
+            }
+            var drag = game.DragService.getDrag();
+            if (drag.isNone()) {
+                drag = game.Service.mouseButtonDownOnEntity();
+                if (drag.isNone() || !this.world.hasComponent(drag, game.Draggable))
+                    return;
+                game.DragService.setDrag(new ut.Entity(drag.index, drag.version));
+            }
+            this.world.usingComponentData(drag, [game.Draggable, ut.Core2D.LayerSorting, ut.Core2D.TransformLocalPosition], function (draggable, layerSorting, position) {
+                if (ut.Core2D.Input.getMouseButtonDown(0)) {
+                    var mouse = ut.Core2D.Input.getInputPosition();
+                    draggable.lastTouch = new Vector2(mouse.x, mouse.y);
+                    draggable.isDrag = true;
+                    // Increase the order to make it visible over all images
+                    draggable.order = layerSorting.order;
+                    layerSorting.order = 999;
+                    // ANIMATION
+                    app.Service.TransformService.animateScale3(_this.world, drag, new Vector3(0.7, 0.7, 1), 0.1, 0, ut.Tweens.TweenFunc.Linear, ut.Core2D.LoopMode.Once);
+                }
+                else if (ut.Core2D.Input.getMouseButton(0)) {
+                    var worldTouch = app.Service.TransformService.getUniversalTouchWorldPosition();
+                    if (draggable.isDrag)
+                        position.position = new Vector3(worldTouch.x, worldTouch.y, 0);
+                }
+                else if (ut.Core2D.Input.getMouseButtonUp(0)) {
+                    if (draggable.isDrag) {
+                        draggable.isDrag = false;
+                        // Increase the order to make it visible over all images
+                        layerSorting.order = draggable.order;
+                        // ANIMATION
+                        app.Service.TransformService.animateScale3(_this.world, drag, new Vector3(1, 1, 1), 0.1, 0, ut.Tweens.TweenFunc.Linear, ut.Core2D.LoopMode.Once);
+                    }
+                    game.DragService.setDrag(ut.NONE);
+                    if (_this.world.hasComponent(drag, game.ItemTag)) {
+                        var item = _this.world.getComponentData(drag, game.ItemTag);
+                        position.position = item.originalPosition;
+                    }
+                }
+            });
+        };
+        return DragSystem;
+    }(ut.ComponentSystem));
+    game.DragSystem = DragSystem;
+})(game || (game = {}));
 // namespace game {
-//     export class TimerSystem extends ut.ComponentSystem {
-//         OnUpdate() : void {
-//             let config = this.world.getConfigData(game.Configuration)
-//             if(!config.active) {
-//                 ut.Time.reset()
-//                 return
-//             }
-//             this.world.forEach([game.Timer , ut.Text.Text2DRenderer] , (timer , renderer)=>{
-//                 let time = timer.time 
-//                 let currentTime = time - ut.Time.time
-//                 renderer.text = parseInt(currentTime.toString()).toString()
-//                 // Once the game is over
-//                 if(currentTime <= 0) {
-//                     config.active = false
-//                     ut.EntityGroup.instantiate(this.world , "game.OnEndGroup")
-//                     ut.EntityGroup.destroyAll(this.world , "game.MainGroup")
+//     export class DragUIFilter extends ut.EntityFilter {
+//         entity : ut.Entity
+//         draggable : game.Draggable
+//         rectTransform : ut.UILayout.RectTransform
+//         interaction : ut.UIControls.MouseInteraction
+//         layerSorting : ut.Core2D.LayerSorting
+//     }
+//     export class DragUIBehaviour extends ut.ComponentBehaviour {
+//         data : DragUIFilter
+//         OnEntityUpdate() :void {
+// if(game.Service.isPaused) return
+//             if(!this.data.draggable.canDrag) return
+//             if(ut.Core2D.Input.isTouchSupported() && ut.Core2D.Input.touchCount() > 0) {
+//                 let touch = ut.Core2D.Input.getTouch(0) , 
+//                     touchPos = new Vector2(touch.x , touch.y)
+//                 switch(touch.phase) {
+//                     case ut.Core2D.TouchState.Began :
+//                         if(this.data.interaction.over) {
+//                             let mouse = ut.Core2D.Input.getInputPosition()
+//                                 this.data.draggable.lastTouch = new Vector2(mouse.x , mouse.y)
+//                                 this.data.draggable.isDrag = true
+//                             // Increase the order to make it visible over all images
+//                             this.data.draggable.order = this.data.layerSorting.order
+//                             this.data.layerSorting.order = 999
+//                             // ANIMATION
+//                             app.Service.TransformService.animateScale3(
+//                                 this.world , 
+//                                 this.data.entity ,
+//                                 new Vector3(0.7,0.7,1) ,
+//                                 0.1 ,
+//                                 0 ,
+//                                 ut.Tweens.TweenFunc.Linear ,
+//                                 ut.Core2D.LoopMode.Once
+//                             )
+//                         }
+//                         break ;
+//                     case ut.Core2D.TouchState.Moved :
+//                         if(this.data.draggable.isDrag) {
+//                             let lastTouch = this.data.draggable.lastTouch ,
+//                                 // FIXME: multiplied a scalar 1.2 value . The screen point is different than the canvas world size
+//                                 updatePos = new Vector2().subVectors(touchPos , lastTouch).multiplyScalar(0.81)
+//                             this.data.rectTransform.anchoredPosition.add(updatePos)
+//                             this.data.draggable.lastTouch = touchPos
+//                         }
+//                         break
+//                     case ut.Core2D.TouchState.Ended :
+//                         if(this.data.draggable.isDrag) {
+//                             this.data.draggable.isDrag = false
+//                             // Increase the order to make it visible over all images
+//                             this.data.layerSorting.order = this.data.draggable.order
+//                             // ANIMATION
+//                             app.Service.TransformService.animateScale3(
+//                                 this.world , 
+//                                 this.data.entity ,
+//                                 new Vector3(1,1,1) ,
+//                                 0.1 ,
+//                                 0 ,
+//                                 ut.Tweens.TweenFunc.Linear ,
+//                                 ut.Core2D.LoopMode.Once
+//                             )
+//                         }
+//                     default :
+//                         break
 //                 }
-//             })
-//             this.world.setConfigData(config)
+//             }
+//             else {
+//                 if(ut.Core2D.Input.getMouseButtonDown(0)) {
+//                     if(this.data.interaction.over) {
+//                         let mouse = ut.Core2D.Input.getInputPosition()
+//                             this.data.draggable.lastTouch = new Vector2(mouse.x , mouse.y)
+//                             this.data.draggable.isDrag = true
+//                         // Increase the order to make it visible over all images
+//                         this.data.draggable.order = this.data.layerSorting.order
+//                         this.data.layerSorting.order = 999
+//                         // ANIMATION
+//                         app.Service.TransformService.animateScale3(
+//                             this.world , 
+//                             this.data.entity ,
+//                             new Vector3(0.7,0.7,1) ,
+//                             0.1 ,
+//                             0 ,
+//                             ut.Tweens.TweenFunc.Linear ,
+//                             ut.Core2D.LoopMode.Once
+//                         )
+//                     }
+//                 }
+//                 else if(ut.Core2D.Input.getMouseButton(0)) {
+//                     if(this.data.draggable.isDrag) {
+//                         let mouseTouch = ut.Core2D.Input.getInputPosition() ,
+//                             lastTouch = this.data.draggable.lastTouch ,
+//                             // FIXME: multiplied a scalar 1.2 value . The screen point is different than the canvas world size
+//                             updatePos = new Vector2().subVectors(mouseTouch , lastTouch).multiplyScalar(0.81)
+//                         this.data.rectTransform.anchoredPosition.add(updatePos)
+//                         this.data.draggable.lastTouch = mouseTouch
+//                     }
+//                 }
+//                 else if(ut.Core2D.Input.getMouseButtonUp(0)) {
+//                     if(this.data.draggable.isDrag) {
+//                         this.data.draggable.isDrag = false
+//                         // Increase the order to make it visible over all images
+//                         this.data.layerSorting.order = this.data.draggable.order
+//                         // ANIMATION
+//                         app.Service.TransformService.animateScale3(
+//                             this.world , 
+//                             this.data.entity ,
+//                             new Vector3(1,1,1) ,
+//                             0.1 ,
+//                             0 ,
+//                             ut.Tweens.TweenFunc.Linear ,
+//                             ut.Core2D.LoopMode.Once
+//                         )
+//                     }
+//                 }
+//             }
 //         }
 //     }
 // }
-var game;
-(function (game) {
-    var DragFilter = /** @class */ (function (_super) {
-        __extends(DragFilter, _super);
-        function DragFilter() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        return DragFilter;
-    }(ut.EntityFilter));
-    game.DragFilter = DragFilter;
-    var DragBehaviour = /** @class */ (function (_super) {
-        __extends(DragBehaviour, _super);
-        function DragBehaviour() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        DragBehaviour.prototype.OnEntityUpdate = function () {
-            if (!this.data.draggable.canDrag)
-                return;
-            if (ut.Core2D.Input.isTouchSupported() && ut.Core2D.Input.touchCount() > 0) {
-                var touch = ut.Core2D.Input.getTouch(0), touchPos = new Vector2(touch.x, touch.y);
-                switch (touch.phase) {
-                    case ut.Core2D.TouchState.Began:
-                        if (this.data.interaction.over) {
-                            var mouse = ut.Core2D.Input.getInputPosition();
-                            this.data.draggable.lastTouch = new Vector2(mouse.x, mouse.y);
-                            this.data.draggable.isDrag = true;
-                            // Increase the order to make it visible over all images
-                            this.data.draggable.order = this.data.layerSorting.order;
-                            this.data.layerSorting.order = 999;
-                            // ANIMATION
-                            app.Service.TransformService.animateScale3(this.world, this.data.entity, new Vector3(0.7, 0.7, 1), 0.1, 0, ut.Tweens.TweenFunc.Linear, ut.Core2D.LoopMode.Once);
-                        }
-                        break;
-                    case ut.Core2D.TouchState.Moved:
-                        if (this.data.draggable.isDrag) {
-                            var lastTouch = this.data.draggable.lastTouch, 
-                            // FIXME: multiplied a scalar 1.2 value . The screen point is different than the canvas world size
-                            updatePos = new Vector2().subVectors(touchPos, lastTouch).multiplyScalar(0.81);
-                            this.data.rectTransform.anchoredPosition.add(updatePos);
-                            this.data.draggable.lastTouch = touchPos;
-                        }
-                        break;
-                    case ut.Core2D.TouchState.Ended:
-                        if (this.data.draggable.isDrag) {
-                            this.data.draggable.isDrag = false;
-                            // Increase the order to make it visible over all images
-                            this.data.layerSorting.order = this.data.draggable.order;
-                            // ANIMATION
-                            app.Service.TransformService.animateScale3(this.world, this.data.entity, new Vector3(1, 1, 1), 0.1, 0, ut.Tweens.TweenFunc.Linear, ut.Core2D.LoopMode.Once);
-                        }
-                    default:
-                        break;
-                }
-            }
-            else {
-                if (ut.Core2D.Input.getMouseButtonDown(0)) {
-                    if (this.data.interaction.over) {
-                        var mouse = ut.Core2D.Input.getInputPosition();
-                        this.data.draggable.lastTouch = new Vector2(mouse.x, mouse.y);
-                        this.data.draggable.isDrag = true;
-                        // Increase the order to make it visible over all images
-                        this.data.draggable.order = this.data.layerSorting.order;
-                        this.data.layerSorting.order = 999;
-                        // ANIMATION
-                        app.Service.TransformService.animateScale3(this.world, this.data.entity, new Vector3(0.7, 0.7, 1), 0.1, 0, ut.Tweens.TweenFunc.Linear, ut.Core2D.LoopMode.Once);
-                    }
-                }
-                else if (ut.Core2D.Input.getMouseButton(0)) {
-                    if (this.data.draggable.isDrag) {
-                        var mouseTouch = ut.Core2D.Input.getInputPosition(), lastTouch = this.data.draggable.lastTouch, 
-                        // FIXME: multiplied a scalar 1.2 value . The screen point is different than the canvas world size
-                        updatePos = new Vector2().subVectors(mouseTouch, lastTouch).multiplyScalar(0.81);
-                        this.data.rectTransform.anchoredPosition.add(updatePos);
-                        this.data.draggable.lastTouch = mouseTouch;
-                    }
-                }
-                else if (ut.Core2D.Input.getMouseButtonUp(0)) {
-                    if (this.data.draggable.isDrag) {
-                        this.data.draggable.isDrag = false;
-                        // Increase the order to make it visible over all images
-                        this.data.layerSorting.order = this.data.draggable.order;
-                        // ANIMATION
-                        app.Service.TransformService.animateScale3(this.world, this.data.entity, new Vector3(1, 1, 1), 0.1, 0, ut.Tweens.TweenFunc.Linear, ut.Core2D.LoopMode.Once);
-                    }
-                }
-            }
-        };
-        return DragBehaviour;
-    }(ut.ComponentBehaviour));
-    game.DragBehaviour = DragBehaviour;
-})(game || (game = {}));
 var app;
 (function (app) {
     var UIService = /** @class */ (function () {
@@ -918,6 +1175,15 @@ var app;
             var rectTransform = world.getComponentData(entity, ut.UILayout.RectTransform);
             rectTransform.anchorMin = new Vector2(0.5, 0.5);
             rectTransform.anchorMax = new Vector2(0.5, 0.5);
+            rectTransform.anchoredPosition = position || new Vector2(0, 0);
+            rectTransform.sizeDelta = size || new Vector2(200, 200);
+            world.setComponentData(entity, rectTransform);
+            return entity;
+        };
+        UIService.anchorTopRight = function (world, entity, position, size) {
+            var rectTransform = world.getComponentData(entity, ut.UILayout.RectTransform);
+            // rectTransform.anchorMin = new Vector2(1,1)
+            // rectTransform.anchorMax = new Vector2(1,1)
             rectTransform.anchoredPosition = position || new Vector2(0, 0);
             rectTransform.sizeDelta = size || new Vector2(200, 200);
             world.setComponentData(entity, rectTransform);
@@ -986,6 +1252,58 @@ var app;
         UI.Events = Events;
     })(UI = app.UI || (app.UI = {}));
 })(app || (app = {}));
+var game;
+(function (game) {
+    var GameSystem = /** @class */ (function (_super) {
+        __extends(GameSystem, _super);
+        function GameSystem() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        GameSystem.prototype.OnUpdate = function () {
+            if (game.Service.isPaused)
+                return;
+            var config = game.Service.getConfig(this.world);
+            var record = game.Service.getRecord();
+            // Once all of lives are finished
+            if (record.live <= 0) {
+                if (config.uiState == game.GameUIStateEnum.complete || config.uiState == game.GameUIStateEnum.failure)
+                    return;
+                if (config.complete) {
+                    console.log("%c Complete Screen", 'background: #33ccff; color: #ffffff');
+                    this.onSuccess(config);
+                }
+                else {
+                    console.log("%c Failure Screen", 'background: #33ccff; color: #ffffff');
+                    this.onFailure(config);
+                }
+            }
+            game.Service.setRecord(record);
+            game.Service.setConfig(config);
+        };
+        GameSystem.prototype.onSuccess = function (config) {
+            var _this = this;
+            config.active = false;
+            config.playable = false;
+            config.uiState = game.GameUIStateEnum.complete;
+            setTimeout(function () {
+                ut.EntityGroup.instantiate(_this.world, "game.OnEndGroup");
+            }, 1000);
+        };
+        GameSystem.prototype.onFailure = function (config) {
+            var _this = this;
+            if (config.uiState == game.GameUIStateEnum.complete || config.uiState == game.GameUIStateEnum.failure)
+                return;
+            config.active = false;
+            config.playable = false;
+            config.uiState = game.GameUIStateEnum.failure;
+            setTimeout(function () {
+                ut.EntityGroup.instantiate(_this.world, "game.OnFailGroup");
+            }, 1000);
+        };
+        return GameSystem;
+    }(ut.ComponentSystem));
+    game.GameSystem = GameSystem;
+})(game || (game = {}));
 /*
 This is a hack to work around https://forum.unity.com/threads/bug-renderer-fails-to-take-into-account-screen-dpi.601087/
 Instructions:
@@ -1002,7 +1320,7 @@ It should not go inside the namespace.
 (function HDPI_Hacks_By_abeisgreat() {
     var w = window;
     var initialize_hack = function () {
-        console.log("Initializing HDPI hacks v6 by @abeisgreat");
+        console.log("%c Initializing HDPI hacks", 'background: #00cc00; color: #ffffff');
         var fakeMouseEventFn = function (ev) {
             var ut_HTML = w.ut._HTML;
             var fakeEvent = {
@@ -1078,36 +1396,50 @@ It should not go inside the namespace.
         }
     }, 10);
 })();
+window.onblur = function () {
+    game.Service.setPause = true;
+    document.title = "blur";
+};
+window.onfocus = function () {
+    game.Service.setPause = false;
+    document.title = "focus";
+};
 var game;
 (function (game) {
-    /// <summary>
-    /// Create : 
-    /// 1) game.Config as Configuration file
-    /// 2) Record component as file
-    /// 3) Record entity in Scene and attach Record component
-    /// 
-    /// </summary>
     var InitializeSystem = /** @class */ (function (_super) {
         __extends(InitializeSystem, _super);
         function InitializeSystem() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         InitializeSystem.prototype.OnUpdate = function () {
+            // if(game.Service.isPaused) return
             var config = game.Service.getConfig(this.world);
             if (config.init)
                 return;
-            console.log("Initializing Game");
-            // initialize system
-            var record = game.Service.createRecord();
-            if (!record)
-                throw "Error : There was Error finding Record";
-            // Initialize the game
-            this.initialize(config, record);
-            // set initialized & make game playable
-            config.init = true;
+            if (config.loaded) {
+                console.log("%c Initializing Game", 'background: #00cc00; color: #ffffff');
+                // initialize system
+                var record = game.Service.createRecord();
+                if (!record)
+                    throw "Error : There was Error finding Record";
+                // Initialize the game
+                this.initialize(config, record);
+                // set initialized & make game playable
+                config.init = true;
+                config.playable = false; // this allows user to touch once again after game starts
+                game.Service.setRecord(record);
+            }
+            else if (!config.loading) {
+                game.Service.addExplicitScript(UT_ASSETS["androidFunc"], function () {
+                    game.Service.addExplicitScript(UT_ASSETS["iosFunc"], function () {
+                        game.Service.addExplicitScript(UT_ASSETS["assetLoader"], function () {
+                        });
+                    });
+                });
+                config.loading = true;
+            }
             // set the data
             game.Service.setConfig(config);
-            game.Service.setRecord(record);
         };
         InitializeSystem.prototype.initialize = function (config, record) {
             this.destroy();
@@ -1115,15 +1447,27 @@ var game;
             this.create();
             // SOMEHINGS BUGGY
             setTimeout(this.AlignBounds, 2000, this.world);
+            this.world.forEach([game.Timer], function (timer) {
+                timer.time = config.taskCompletionTime;
+            });
         };
         // Destroy the groups you have created (this method is usefull when we are restarting game)
         InitializeSystem.prototype.destroy = function () {
+            // Main Groups
             ut.EntityGroup.destroyAll(this.world, "game.MainGroup");
+            ut.EntityGroup.destroyAll(this.world, "game.OnFailGroup");
+            ut.EntityGroup.destroyAll(this.world, "game.OnEndGroup");
+            // Your Groups
+            ut.EntityGroup.destroyAll(this.world, "game.GroundCrackEffectGroup");
+            ut.EntityGroup.destroyAll(this.world, "game.BasketSplashEffectGroup");
+            ut.EntityGroup.destroyAll(this.world, "game.Danger01Group");
+            ut.EntityGroup.destroyAll(this.world, "game.Item01Group");
+            ut.EntityGroup.destroyAll(this.world, "game.Item02Group");
         };
         // Instantiate required groups .
         InitializeSystem.prototype.instantiate = function () {
-            ut.EntityGroup.instantiate(this.world, "game.OnStartGroup");
-            ut.EntityGroup.instantiate(this.world, "game.MainGroup");
+            game.Service.instantiateAndLoadAssets("game.MainGroup");
+            game.Service.instantiateAndLoadAssets("game.GameDemoGroup");
         };
         // You custom init
         InitializeSystem.prototype.create = function () {
@@ -1170,6 +1514,233 @@ var game;
         return InitializeSystem;
     }(ut.ComponentSystem));
     game.InitializeSystem = InitializeSystem;
+})(game || (game = {}));
+var game;
+(function (game) {
+    var Service = /** @class */ (function () {
+        function Service() {
+        }
+        Service.getWorld = function () {
+            return game.Service.world;
+        };
+        Service.getCamera = function () {
+            return game.Service.camera;
+        };
+        Object.defineProperty(Service, "setPause", {
+            set: function (value) {
+                this._isPaused = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Service, "isPaused", {
+            get: function () {
+                return this._isPaused;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        // If it already exists it destroys it and creates new .
+        // Use full for initializing method or restarting the game
+        Service.createRecord = function () {
+            var world = game.Service.world;
+            ut.EntityGroup.destroyAll(world, "game.RecordGroup");
+            game.Service.record = null;
+            game.Service.record = ut.EntityGroup.instantiate(world, "game.RecordGroup")[0];
+            return world.getComponentData(game.Service.record, game.Record);
+        };
+        Service.getRecord = function () {
+            var world = game.Service.world;
+            if (!world.exists(game.Service.record)) {
+                game.Service.record = world.getEntityByName("Record");
+                if (game.Service.record == null || game.Service.record.isNone()) {
+                    game.Service.record == null;
+                    this.createRecord();
+                }
+            }
+            return world.getComponentData(game.Service.record, game.Record);
+        };
+        Service.setRecord = function (data) {
+            var world = game.Service.world;
+            if (!world.exists(game.Service.record)) {
+                game.Service.record = world.getEntityByName("Record");
+                if (game.Service.record == null) {
+                    game.Service.record = null;
+                    return null;
+                }
+            }
+            world.setComponentData(game.Service.record, data);
+            return data;
+        };
+        // Method returns the entity is present in current world
+        Service.exists = function (world, entity) {
+            if (entity.isNone() || entity.index == 0 || entity.version == 0)
+                return false;
+            if (!world.exists(entity))
+                return false;
+            return true;
+        };
+        Service.sameEntity = function (one, two) {
+            if (one.index == two.index && one.version == two.version)
+                return true;
+            return false;
+        };
+        // Custom methods to make it simple
+        // modify this (0.0)
+        Service.getConfig = function (world) {
+            game.Service.world = world;
+            game.Service.camera = world.getEntityByName("Camera");
+            return world.getConfigData(game.Configuration);
+        };
+        Service.setConfig = function (config) {
+            game.Service.world.setConfigData(config);
+        };
+        // public Callback: (name:string) => void
+        Service.addExplicitScript = function (src, callback) {
+            var script = document.createElement('script');
+            script.setAttribute('src', src);
+            script.addEventListener('load', function (event) {
+                callback();
+            }, false);
+            document.body.appendChild(script);
+        };
+        // CREATE A METHOD TO REVERT ON ERROR
+        // FILES USED : assetLoader.js => checkStreamingStatus()
+        Service.getAssetStatus = function () {
+            var _this = this;
+            var downloaded = true, error = false;
+            this.world.forEach([ut.Core2D.Image2D], function (image) {
+                switch (image.status) {
+                    case ut.Core2D.ImageStatus.Loaded:
+                        downloaded = false;
+                        break;
+                    case ut.Core2D.ImageStatus.LoadError:
+                        console.warn("%c Load Error : " + image.sourceName, 'background: #ffcc00; color: #ffffff');
+                        error = true;
+                        break;
+                }
+            });
+            if (error) {
+                // api call to server on asset loading error
+                // unload the assets
+                this.world.forEach([ut.Entity, game.StreamAssetTag], function (entity, tag) {
+                    _this.world.destroyEntity(entity);
+                });
+                var config = game.Service.getConfig(this.world);
+                config.stream_sprites.length = 0;
+                game.Service.setConfig(config);
+            }
+            return downloaded;
+        };
+        Service.downloadImage = function (name, url) {
+            // Create Holder
+            var holder = this.world.createEntity();
+            this.world.setEntityName(holder, name + "_Holder");
+            this.world.addComponent(holder, ut.Core2D.TransformNode);
+            this.world.addComponent(holder, game.StreamAssetTag);
+            // Create Texture Entity
+            var texture2D = this.world.createEntity();
+            this.world.setEntityName(texture2D, name + "_texture2D");
+            this.world.addComponent(texture2D, ut.Core2D.Image2DLoadFromFile);
+            this.world.usingComponentData(texture2D, [ut.Core2D.TransformNode, ut.Core2D.Image2DLoadFromFile], function (node, file) {
+                node.parent = holder;
+                file.imageFile = url;
+            });
+            // Load Texture Entity
+            this.world.addComponent(texture2D, ut.Core2D.Image2D);
+            // Create Sprite Entity
+            var sprite2D = this.world.createEntity();
+            this.world.setEntityName(sprite2D, name + "_sprite2D");
+            this.world.addComponent(sprite2D, ut.Core2D.Sprite2D);
+            this.world.usingComponentData(sprite2D, [ut.Core2D.TransformNode, ut.Core2D.Sprite2D], function (node, sprite) {
+                node.parent = holder;
+                sprite.image = texture2D;
+                sprite.pivot = new Vector2(0.5, 0.5);
+            });
+            return new ut.Entity(sprite2D.index, sprite2D.version);
+        };
+        Service.instantiateAndLoadAssets = function (name) {
+            var _this = this;
+            ut.EntityGroup.instantiate(this.world, name);
+            var config = game.Service.getConfig(this.world);
+            var lengthSprites = config.stream_sprites.length;
+            if (lengthSprites <= 0)
+                return;
+            this.world.forEach([ut.Entity, game.DownloadOnLoad], function (entity, tag) {
+                var entityName = _this.world.getEntityName(entity);
+                entityName += "_sprite2D";
+                var _loop_1 = function (i) {
+                    var streamSprite = config.stream_sprites[i];
+                    var streamSpriteName = _this.world.getEntityName(streamSprite);
+                    // Find the image from pool of downloaded objects and replace the downloaded asset
+                    if (entityName == streamSpriteName) {
+                        _this.world.usingComponentData(entity, [ut.Core2D.Sprite2DRenderer], function (renderer) {
+                            var pixelsToWorldUnits;
+                            var pixelSize;
+                            // Grab the original pixel Units and ratio
+                            _this.world.usingComponentData(renderer.sprite, [ut.Core2D.Sprite2D], function (sprite) {
+                                _this.world.usingComponentData(sprite.image, [ut.Core2D.Image2D], function (image) {
+                                    pixelsToWorldUnits = image.pixelsToWorldUnits;
+                                    pixelSize = image.imagePixelSize;
+                                });
+                            });
+                            // Assign the grabbed value
+                            _this.world.usingComponentData(streamSprite, [ut.Core2D.Sprite2D], function (sprite) {
+                                _this.world.usingComponentData(sprite.image, [ut.Core2D.Image2D], function (image) {
+                                    image.pixelsToWorldUnits = pixelsToWorldUnits;
+                                    image.imagePixelSize = pixelSize;
+                                });
+                            });
+                            renderer.sprite = streamSprite;
+                        });
+                        return "break";
+                    }
+                };
+                for (var i = 0; i < lengthSprites; i++) {
+                    var state_1 = _loop_1(i);
+                    if (state_1 === "break")
+                        break;
+                }
+            });
+        };
+        // Create a good method on this topic
+        Service.mouseButtonDownOnEntity = function () {
+            if (ut.Core2D.Input.getMouseButtonDown(0)) {
+                var mousePos = ut.Core2D.Input.getWorldInputPosition(this.world);
+                var hit = ut.HitBox2D.HitBox2DService.hitTest(game.Service.world, mousePos, game.Service.camera);
+                if (!hit.entityHit.isNone()) {
+                    return hit.entityHit;
+                }
+            }
+            return ut.NONE;
+        };
+        // Create a good method on this topic
+        Service.mouseButtonOnEntity = function () {
+            if (ut.Core2D.Input.isTouchSupported() && ut.Core2D.Input.touchCount() > 0) {
+                var touch = ut.Core2D.Input.getTouch(0);
+                // switch(touch.phase) {
+                // case ut.Core2D.TouchState.Moved :
+                var touchPos = app.Service.TransformService.getUniversalTouchWorldPosition();
+                var hit = ut.HitBox2D.HitBox2DService.hitTest(game.Service.world, touchPos, game.Service.camera);
+                if (!hit.entityHit.isNone())
+                    return hit.entityHit;
+                // break
+                // }
+            }
+            else if (ut.Core2D.Input.getMouseButton(0)) {
+                var mousePos = ut.Core2D.Input.getWorldInputPosition(this.world);
+                var hit = ut.HitBox2D.HitBox2DService.hitTest(game.Service.world, mousePos, game.Service.camera);
+                if (!hit.entityHit.isNone())
+                    return hit.entityHit;
+            }
+            return ut.NONE;
+        };
+        Service = __decorate([
+            ut.requiredComponents(game.Record)
+        ], Service);
+        return Service;
+    }());
+    game.Service = Service;
 })(game || (game = {}));
 var ut;
 (function (ut) {

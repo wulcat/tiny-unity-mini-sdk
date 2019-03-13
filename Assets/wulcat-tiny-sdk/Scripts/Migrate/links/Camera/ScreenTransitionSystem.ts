@@ -8,7 +8,7 @@
 //     export class UpdateScreenTransition extends ut.ComponentSystem {
         
 //         OnUpdate():void {
-
+    // if(game.Service.isPaused) return
 //             let deltaTime = this.scheduler.deltaTime();
 //             let entitiesToDestroy: ut.Entity[] = [];
 //             this.world.forEach([ut.Entity, game.ScreenTransition], (entity, screenTransition) => {

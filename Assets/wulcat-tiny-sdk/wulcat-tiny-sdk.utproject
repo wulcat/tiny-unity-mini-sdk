@@ -68,7 +68,14 @@
         { "Id": "4ae56f767bc87e1c32e79caa0f3b736a", "Name": "UTiny.UIControlsExtensions" },
         { "Id": "e46c24fb4d9a01e79b109bbcf6d24260", "Name": "UTiny.UILayout" }
     ],
-    "StartupEntityGroup": { "Id": "0c0d07ab97a14b32b6f328caf9126342", "Name": "RecordGroup" }
+    "Assets": [{
+        "Object": { "$TypeId": 10, "Guid": "b9c63c8d2fcad45358ae1b44ccfbce12", "FileId": 4900000, "Type": 3 }
+    }, {
+        "Object": { "$TypeId": 10, "Guid": "10fa54357b3b74d8d8bc6b823c195cad", "FileId": 4900000, "Type": 3 }
+    }, {
+        "Object": { "$TypeId": 10, "Guid": "5457cda79b0fc4aff8478803de0b6890", "FileId": 4900000, "Type": 3 }
+    }],
+    "StartupEntityGroup": { "Id": "25b52e41ac0842d694e91429cb902ecb", "Name": "OnStartGroup" }
 },
 {
     "$TypeId": 5,
@@ -88,5 +95,7 @@
         "Type": { "Id": "8aa36809bc0e482a8078ed1d7e2b02b4", "Name": "Configuration" }
     }, {
         "Type": { "Id": "38283a6cef9faa790b5c9936163d59e3", "Name": "Physics2DConfig" }
+    }, {
+        "Type": { "Id": "a5b8fcc5b45640dca948f53560b3b21e", "Name": "Configuration" }
     }]
 }]

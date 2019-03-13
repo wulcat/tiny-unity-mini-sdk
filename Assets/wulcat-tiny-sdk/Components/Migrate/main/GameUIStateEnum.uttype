@@ -1,0 +1,60 @@
+[{
+    "$TypeId": 3,
+    "Id": "c35f09be92e340548656701870fd3314",
+    "Name": "GameUIStateEnum",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Enum",
+    "BaseType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+    "Fields": [{
+        "Id": "a8b5422d3c7349e2a64f5a5df0db5b6b",
+        "Name": "NONE",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "e10a1772f9d9459fbef2b6dee8206d50",
+        "Name": "failure",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "47f92966926248f9a02fedbd7e6ae10e",
+        "Name": "complete",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "c11109b41f744d6090a4d504d983e148",
+        "Name": "start",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "09f21bf989324ab8ad62357a2279a6fd",
+        "Name": "tutorial",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "c35f09be92e340548656701870fd3314", "Name": "GameUIStateEnum" },
+        "Properties": {
+            "failure": 1,
+            "complete": 2,
+            "start": 3,
+            "tutorial": 4
+        }
+    }
+}]

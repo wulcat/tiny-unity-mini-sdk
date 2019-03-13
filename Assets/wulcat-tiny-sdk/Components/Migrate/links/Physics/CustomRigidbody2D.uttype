@@ -1,0 +1,41 @@
+[{
+    "$TypeId": 3,
+    "Id": "6847d1df471e41a1b733febbb68b08a7",
+    "Name": "CustomRigidbody2D",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "ed3784d06c134ceebc944e6ed7358149",
+        "Name": "velocity",
+        "FieldType": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+        "Array": false,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "42998b1003fa4b3999b69722c0fe9e21",
+        "Name": "gravity",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "8b827141a10f4822b124f42d20c66b8c",
+        "Name": "mass",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "6847d1df471e41a1b733febbb68b08a7", "Name": "CustomRigidbody2D" },
+        "Properties": {
+            "gravity": -1,
+            "mass": 1
+        }
+    }
+}]

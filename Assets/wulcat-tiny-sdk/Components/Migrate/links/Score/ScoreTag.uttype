@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "3df8ff477d0048b2ad2f9e5d79d3a43b",
+    "Name": "ScoreTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "3df8ff477d0048b2ad2f9e5d79d3a43b", "Name": "ScoreTag" }
+    }
+}]

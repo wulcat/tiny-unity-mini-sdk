@@ -1,0 +1,35 @@
+[{
+    "$TypeId": 3,
+    "Id": "c04f993b94ba49e5873538337ea78598",
+    "Name": "Record",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "Documentation": {
+        "Summary": "The Game Data is stored here"
+    },
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "95798ead37334e71a926804fb957fc7f",
+        "Name": "score",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "c04051d0d1a647d48c471cd456738956",
+        "Name": "live",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "c04f993b94ba49e5873538337ea78598", "Name": "Record" },
+        "Properties": {
+            "live": 3
+        }
+    }
+}]

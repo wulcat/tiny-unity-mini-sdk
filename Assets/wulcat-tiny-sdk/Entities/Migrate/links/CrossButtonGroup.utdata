@@ -1,0 +1,480 @@
+﻿[{
+    "$TypeId": 4,
+    "Id": "56077bb42baf445aa2f290e0b6273b30",
+    "Name": "CrossButtonGroup",
+    "ExportFlags": 0,
+    "SerializedVersion": 0,
+    "Entities": [
+        { "$TypeId": 9, "Id": "580faf5aec9f4a40a8e9222e25f16f02", "Name": "Canvas" },
+        { "$TypeId": 9, "Id": "23741826bc644b488c1f0ec5d5e076a2", "Name": "cross_button" },
+        { "$TypeId": 9, "Id": "d2669c0ec9914d10a4191931b31728bc", "Name": "crossbutton_panel" },
+        { "$TypeId": 9, "Id": "18c56c57994248099f799d101075c687", "Name": "text" },
+        { "$TypeId": 9, "Id": "691cf0b2590e40d0936892ba29130312", "Name": "panel" },
+        { "$TypeId": 9, "Id": "f58e681a887b43539eebe92a521882fe", "Name": "cross_button" },
+        { "$TypeId": 9, "Id": "860063378b9c41e4a966b5da10a99e1e", "Name": "CanvasCamera" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "580faf5aec9f4a40a8e9222e25f16f02",
+    "Name": "Canvas",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" }
+    }, {
+        "Type": { "Id": "757a06c4ae1ec5fccccd28eb89a6dc54", "Name": "UICanvas" },
+        "Properties": {
+            "camera": { "$TypeId": 9, "Id": "860063378b9c41e4a966b5da10a99e1e", "Name": "CanvasCamera" },
+            "uiScaleMode": {
+                "$TypeId": 8,
+                "Type": { "Id": "0accc10de1131b44701da611a92a0f65", "Name": "UIScaleMode" },
+                "Id": "9d7c7416dafcd189680613e618163ec5",
+                "Name": "ScaleWithScreenSize",
+                "Value": 1
+            },
+            "referenceResolution": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 720,
+                    "y": 1200
+                }
+            }
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "23741826bc644b488c1f0ec5d5e076a2",
+    "Name": "cross_button",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "580faf5aec9f4a40a8e9222e25f16f02", "Name": "Canvas" }
+        }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" },
+        "Properties": {
+            "position": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 360,
+                    "y": 503.5508
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" },
+        "Properties": {
+            "anchorMin": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            "anchorMax": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            "sizeDelta": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 336.8,
+                    "y": 92.59998
+                }
+            },
+            "anchoredPosition": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0,
+                    "y": -46.29999
+                }
+            },
+            "pivot": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0.000000001862645,
+                    "y": 0.5
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "51e515b775424a0aae674ad07fcafbef", "Name": "CrossUITag" }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "d2669c0ec9914d10a4191931b31728bc",
+    "Name": "crossbutton_panel",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "23741826bc644b488c1f0ec5d5e076a2", "Name": "Image" }
+        }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" },
+        "Properties": {
+            "position": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 166.45,
+                    "y": -8.899998
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" },
+        "Properties": {
+            "anchorMin": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 1,
+                    "y": 0
+                }
+            },
+            "anchorMax": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 1,
+                    "y": 0
+                }
+            },
+            "sizeDelta": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 333.7,
+                    "y": 74.8
+                }
+            },
+            "anchoredPosition": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": -166.85,
+                    "y": 37.4
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "1c504a8a7963db0d32e89b527b90e057", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10 }
+        }
+    }, {
+        "Type": { "Id": "be2f221c9af74ec5c0a4495a2d6769a3", "Name": "Sprite2DRendererOptions" },
+        "Properties": {
+            "size": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 333.7,
+                    "y": 74.8
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "b1e5348389156b7a260d6ed393754fba", "Name": "LayerSorting" },
+        "Properties": {
+            "order": 600
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "18c56c57994248099f799d101075c687",
+    "Name": "text",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "d2669c0ec9914d10a4191931b31728bc", "Name": "crossbutton_panel" }
+        }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" },
+        "Properties": {
+            "position": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -42.7,
+                    "y": 0.0001144409
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" },
+        "Properties": {
+            "anchorMin": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0.5
+                }
+            },
+            "anchorMax": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0.5
+                }
+            },
+            "sizeDelta": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 117.13,
+                    "y": 74
+                }
+            },
+            "anchoredPosition": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 124.15,
+                    "y": 0.0001144409
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "617fd26299c944d58b61164e0c9c9353", "Name": "Text2DRenderer" },
+        "Properties": {
+            "style": { "$TypeId": 9, "Id": "18c56c57994248099f799d101075c687", "Name": "Image" },
+            "text": "Close"
+        }
+    }, {
+        "Type": { "Id": "ced0260f12f72499bae7fea4e1df92b7", "Name": "Text2DStyle" },
+        "Properties": {
+            "color": {
+                "Type": { "Id": "2a90a1633d6dc16cd37cdfaca7b93cea", "Name": "Color" },
+                "Properties": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                }
+            },
+            "size": 40
+        }
+    }, {
+        "Type": { "Id": "0481d22c456081a992e7c7ee42da6c19", "Name": "Text2DStyleBitmapFont" },
+        "Properties": {
+            "font": { "$TypeId": 10, "Guid": "6f1b0202965b34f528dd313ad0578c47", "FileId": 11400000, "Type": 2 }
+        }
+    }, {
+        "Type": { "Id": "00d6bc791188d69186aa19bf8f6652a8", "Name": "RectTransformFinalSize" }
+    }, {
+        "Type": { "Id": "b1e5348389156b7a260d6ed393754fba", "Name": "LayerSorting" },
+        "Properties": {
+            "order": 601
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "691cf0b2590e40d0936892ba29130312",
+    "Name": "panel",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "d2669c0ec9914d10a4191931b31728bc", "Name": "Image" }
+        }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" },
+        "Properties": {
+            "position": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": -134.06,
+                    "y": 0
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" },
+        "Properties": {
+            "anchorMin": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0.5
+                }
+            },
+            "anchorMax": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0.5
+                }
+            },
+            "sizeDelta": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 65.59,
+                    "y": 74.8
+                }
+            },
+            "anchoredPosition": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 32.79,
+                    "y": 0
+                }
+            }
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "f58e681a887b43539eebe92a521882fe",
+    "Name": "cross_button",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "691cf0b2590e40d0936892ba29130312", "Name": "Image" }
+        }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" },
+        "Properties": {
+            "anchorMin": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "anchorMax": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0.5,
+                    "y": 0.5
+                }
+            },
+            "sizeDelta": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 53.47,
+                    "y": 53.47
+                }
+            },
+            "anchoredPosition": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 0.0000022561,
+                    "y": -1.1
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" },
+        "Properties": {
+            "position": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0.0000022561,
+                    "y": -1.1
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "1c504a8a7963db0d32e89b527b90e057", "Name": "Sprite2DRenderer" },
+        "Properties": {
+            "sprite": { "$TypeId": 10 },
+            "color": {
+                "Type": { "Id": "2a90a1633d6dc16cd37cdfaca7b93cea", "Name": "Color" },
+                "Properties": {
+                    "r": 0.3113208,
+                    "g": 0.3113208,
+                    "b": 0.3113208,
+                    "a": 1
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "be2f221c9af74ec5c0a4495a2d6769a3", "Name": "Sprite2DRendererOptions" },
+        "Properties": {
+            "size": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 53.47,
+                    "y": 53.47
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "b1e5348389156b7a260d6ed393754fba", "Name": "LayerSorting" },
+        "Properties": {
+            "order": 601
+        }
+    }, {
+        "Type": { "Id": "0efd2ae60c7796b3a911cb3247c89bd9", "Name": "MouseInteraction" }
+    }, {
+        "Type": { "Id": "9685449a59bb49389093dc61cb76e2ac", "Name": "CloseTag" }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "860063378b9c41e4a966b5da10a99e1e",
+    "Name": "CanvasCamera",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 0,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "12692383f3fef3bb74c209888c5b0939", "Name": "Camera2D" },
+        "Properties": {
+            "depth": 20,
+            "layerMask": 32
+        }
+    }, {
+        "Type": { "Id": "c5779f4910ea4deebbcaeefbea91d81d", "Name": "CanvasResolutionFitter" }
+    }]
+}]

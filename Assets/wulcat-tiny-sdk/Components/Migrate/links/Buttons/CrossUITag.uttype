@@ -1,0 +1,32 @@
+[{
+    "$TypeId": 3,
+    "Id": "51e515b775424a0aae674ad07fcafbef",
+    "Name": "CrossUITag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "0914cde9871a4ec1b72e4e64a431d678",
+        "Name": "showing",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "e708c48bd71840d486faf31ffa4310d9",
+        "Name": "hiding",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "51e515b775424a0aae674ad07fcafbef", "Name": "CrossUITag" },
+        "Properties": {
+            "showing": true
+        }
+    }
+}]

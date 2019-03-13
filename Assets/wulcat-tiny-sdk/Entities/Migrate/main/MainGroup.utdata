@@ -1,0 +1,54 @@
+﻿[{
+    "$TypeId": 4,
+    "Id": "da07158f7d994ed9a86352df69513ecf",
+    "Name": "MainGroup",
+    "ExportFlags": 0,
+    "SerializedVersion": 0,
+    "Entities": [
+        { "$TypeId": 9, "Id": "ae26569b2f72415280e6117720efd620", "Name": "Camera" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "ae26569b2f72415280e6117720efd620",
+    "Name": "Camera",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 0,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" },
+        "Properties": {
+            "position": {
+                "Type": { "Id": "f139194553e8ae4a3250c5527d6de169", "Name": "Vector3" },
+                "Properties": {
+                    "x": 0,
+                    "y": 0
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "12692383f3fef3bb74c209888c5b0939", "Name": "Camera2D" },
+        "Properties": {
+            "halfVerticalSize": 5,
+            "clearFlags": {
+                "$TypeId": 8,
+                "Type": { "Id": "76a06ddd38e99125d930e77c6a287872", "Name": "CameraClearFlags" },
+                "Id": "9faedc246f34513076701ef66b5ad74f",
+                "Name": "SolidColor",
+                "Value": 1
+            },
+            "depth": -1,
+            "layerMask": 1
+        }
+    }, {
+        "Type": { "Id": "d92a92714b0440f2a4ad8963937c555b", "Name": "CameraTag" }
+    }, {
+        "Type": { "Id": "b1de96138acb470a91f56e28c5a0e07a", "Name": "CameraResolutionFitter" }
+    }]
+}]

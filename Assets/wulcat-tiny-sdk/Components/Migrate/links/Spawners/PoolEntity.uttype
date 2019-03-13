@@ -1,0 +1,29 @@
+[{
+    "$TypeId": 3,
+    "Id": "803fc34c68d84660bd3c7b7b1ee452d4",
+    "Name": "PoolEntity",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "1fdbeb69e4264f5c80afedf05d5255ad",
+        "Name": "entities",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" },
+        "Array": true,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "c0448ce2c03442e2a7e59c89c8f6a96c",
+        "Name": "group",
+        "FieldType": { "Id": "1bff5adddd7c41de98d3329c7c641208", "Name": "String" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "803fc34c68d84660bd3c7b7b1ee452d4", "Name": "PoolEntity" }
+    }
+}]

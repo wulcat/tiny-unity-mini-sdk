@@ -33,6 +33,16 @@
             }
         },
         {
+            "Name": "CrossButtonSystem",
+            "QualifiedName": "game.CrossButtonSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/CrossButtonSystem.ts",
+                "Line": 2,
+                "Character": 17
+            }
+        },
+        {
             "Name": "Time",
             "QualifiedName": "ut.Time",
             "Description": "Placeholder system to provide a UnityEngine.Time like API\n\ne.g. \n  let deltaTime = ut.Time.deltaTime();\n  let time = ut.Time.time();",
@@ -46,12 +56,42 @@
             ]
         },
         {
+            "Name": "TimerSystem",
+            "QualifiedName": "game.TimerSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/TimerSystem.ts",
+                "Line": 2,
+                "Character": 17
+            }
+        },
+        {
+            "Name": "DragSystem",
+            "QualifiedName": "game.DragSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragSystem.ts",
+                "Line": 2,
+                "Character": 17
+            }
+        },
+        {
+            "Name": "GameSystem",
+            "QualifiedName": "game.GameSystem",
+            "Description": "",
+            "Source": {
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/GameSystem.ts",
+                "Line": 2,
+                "Character": 17
+            }
+        },
+        {
             "Name": "InitializeSystem",
             "QualifiedName": "game.InitializeSystem",
             "Description": "",
             "Source": {
                 "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/InitializeSystem.ts",
-                "Line": 117,
+                "Line": 120,
                 "Character": 17
             }
         }
@@ -98,37 +138,23 @@
             ]
         },
         {
-            "Name": "DragFilter",
-            "QualifiedName": "game.DragFilter",
+            "Name": "SpawnFilter",
+            "QualifiedName": "game.SpawnFilter",
             "Description": "",
             "Source": {
-                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
-                "Line": 2,
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
+                "Line": 3,
                 "Character": 17
             },
             "Fields": [
                 {
-                    "Name": "entity",
-                    "QualifiedName": "ut.Entity",
+                    "Name": "spawn",
+                    "QualifiedName": "game.Spawn",
                     "Description": "",
                     "Source": {
-                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
-                        "Line": 2,
-                        "Character": 54
-                    },
-                    "IsStatic": false,
-                    "IsReadonly": false,
-                    "IsOptional": false,
-                    "IsPublic": true
-                },
-                {
-                    "Name": "draggable",
-                    "QualifiedName": "game.Draggable",
-                    "Description": "",
-                    "Source": {
-                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
                         "Line": 3,
-                        "Character": 27
+                        "Character": 55
                     },
                     "IsStatic": false,
                     "IsReadonly": false,
@@ -136,41 +162,13 @@
                     "IsPublic": true
                 },
                 {
-                    "Name": "rectTransform",
-                    "QualifiedName": "ut.UILayout.RectTransform",
+                    "Name": "pool",
+                    "QualifiedName": "game.PoolEntity",
                     "Description": "",
                     "Source": {
-                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
                         "Line": 4,
-                        "Character": 35
-                    },
-                    "IsStatic": false,
-                    "IsReadonly": false,
-                    "IsOptional": false,
-                    "IsPublic": true
-                },
-                {
-                    "Name": "interaction",
-                    "QualifiedName": "ut.UIControls.MouseInteraction",
-                    "Description": "",
-                    "Source": {
-                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
-                        "Line": 5,
-                        "Character": 50
-                    },
-                    "IsStatic": false,
-                    "IsReadonly": false,
-                    "IsOptional": false,
-                    "IsPublic": true
-                },
-                {
-                    "Name": "layerSorting",
-                    "QualifiedName": "ut.Core2D.LayerSorting",
-                    "Description": "",
-                    "Source": {
-                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
-                        "Line": 6,
-                        "Character": 53
+                        "Character": 27
                     },
                     "IsStatic": false,
                     "IsReadonly": false,
@@ -211,23 +209,23 @@
             ]
         },
         {
-            "Name": "DragBehaviour",
-            "QualifiedName": "game.DragBehaviour",
+            "Name": "SpawnBehaviour",
+            "QualifiedName": "game.SpawnBehaviour",
             "Description": "",
             "Source": {
-                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
-                "Line": 9,
+                "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
+                "Line": 8,
                 "Character": 17
             },
             "Fields": [
                 {
                     "Name": "data",
-                    "QualifiedName": "game.DragFilter",
+                    "QualifiedName": "game.SpawnFilter",
                     "Description": "",
                     "Source": {
-                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
-                        "Line": 9,
-                        "Character": 63
+                        "File": "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
+                        "Line": 8,
+                        "Character": 64
                     },
                     "IsStatic": false,
                     "IsReadonly": false,
@@ -236,7 +234,10 @@
                 }
             ],
             "Methods": [
-                "OnEntityUpdate"
+                "OnEntityEnable",
+                "OnEntityUpdate",
+                "setPositionVertically",
+                "setPositionHorizontally"
             ]
         }
     ],
@@ -244,35 +245,36 @@
         {
             "Key": "tsconfig",
             "Description": "Time taken to read and parse the given tsconfig.json file",
-            "Duration": 81,
+            "Duration": 84,
             "Steps": 1
         },
         {
             "Key": "checksum",
             "Description": "Time taken to compute the MD5 of all inputs",
-            "Duration": 187,
+            "Duration": 199,
             "Steps": 1
         },
         {
             "Key": "compile",
             "Description": "Time taken to compile the TypeScript program",
-            "Duration": 826,
-            "Steps": 30
+            "Duration": 926,
+            "Steps": 36
         },
         {
             "Key": "emit",
             "Description": "Time taken to generate and write the JavaScript output",
-            "Duration": 154,
+            "Duration": 193,
             "Steps": 2
         },
         {
             "Key": "metadata",
             "Description": "Time taken to reflect Tiny metadata from the compiled program",
             "Duration": 8,
-            "Steps": 5
+            "Steps": 9
         }
     ],
     "SourceFiles": [
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/Communication.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Button/ButtonSystem.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/CameraFollow.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Camera/FitScreenLayoutSystem.ts",
@@ -284,19 +286,24 @@
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/CustomPhysics2DBehaviour.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Physics/StaticForce2DBehaviour.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Score/ScoreSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/JsonUtility.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/PhysicsService.ts",
-        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/Service.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Service/TransformService.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Spawners/SpawnBehaviour.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/ClockSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/CrossButtonSystem.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/Time.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/Time/TimerSystem.ts",
-        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragBehaviour.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragService.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/DragUIBehaviour.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/links/UI/UIService.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/GameSystem.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/InitializeSystem.ts",
+        "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Assets/wulcat-tiny-sdk/Scripts/Migrate/main/Service.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Library/PackageCache/com.unity.tiny@0.14.1-preview/Runtime/Modules/UTiny.EntityGroup/Scripts/EntityGroup.ts",
         "/Users/zoelove/Desktop/fwrsa_data/C/Unity/tiny-unity-mini-sdk/Library/PackageCache/com.unity.tiny@0.14.1-preview/Runtime/Modules/UTiny.EntityGroup/Scripts/EntityLookupCache.ts"
     ],
-    "InputHash": "103a02388e4ca93406cdfad200ead3fd",
-    "GeneratedAt": "Tue Feb 26 2019 11:48:04 GMT+0530 (IST)"
+    "InputHash": "ac1e1314b8895fba8239940e93bf5a66",
+    "GeneratedAt": "Wed Mar 13 2019 20:20:10 GMT+0530 (IST)"
 }

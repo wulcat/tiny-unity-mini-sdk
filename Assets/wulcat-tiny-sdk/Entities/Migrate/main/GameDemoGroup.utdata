@@ -1,0 +1,121 @@
+﻿[{
+    "$TypeId": 4,
+    "Id": "72f62d69985d48429a19ea7da0e0594a",
+    "Name": "GameDemoGroup",
+    "ExportFlags": 0,
+    "SerializedVersion": 0,
+    "Entities": [
+        { "$TypeId": 9, "Id": "28302f384e114a66b3b83bc20cb1d7a4", "Name": "Canvas" },
+        { "$TypeId": 9, "Id": "14b5cdb465b84202989f141ca3885b72", "Name": "CanvasCamera" },
+        { "$TypeId": 9, "Id": "499c998cfd2d489c85a63b438888f356", "Name": "Entity" }
+    ]
+},
+{
+    "$TypeId": 5,
+    "Id": "28302f384e114a66b3b83bc20cb1d7a4",
+    "Name": "Canvas",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" }
+    }, {
+        "Type": { "Id": "757a06c4ae1ec5fccccd28eb89a6dc54", "Name": "UICanvas" },
+        "Properties": {
+            "camera": { "$TypeId": 9, "Id": "14b5cdb465b84202989f141ca3885b72", "Name": "CanvasCamera" },
+            "uiScaleMode": {
+                "$TypeId": 8,
+                "Type": { "Id": "0accc10de1131b44701da611a92a0f65", "Name": "UIScaleMode" },
+                "Id": "9d7c7416dafcd189680613e618163ec5",
+                "Name": "ScaleWithScreenSize",
+                "Value": 1
+            },
+            "referenceResolution": {
+                "Type": { "Id": "3abb69286ddfc2d1c617a173c1eeb35d", "Name": "Vector2" },
+                "Properties": {
+                    "x": 720,
+                    "y": 1200
+                }
+            }
+        }
+    }, {
+        "Type": { "Id": "c5779f4910ea4deebbcaeefbea91d81d", "Name": "CanvasResolutionFitter" }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "14b5cdb465b84202989f141ca3885b72",
+    "Name": "CanvasCamera",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 0,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "12692383f3fef3bb74c209888c5b0939", "Name": "Camera2D" },
+        "Properties": {
+            "depth": 10,
+            "layerMask": 32
+        }
+    }]
+},
+{
+    "$TypeId": 5,
+    "Id": "499c998cfd2d489c85a63b438888f356",
+    "Name": "Entity",
+    "Enabled": true,
+    "Static": false,
+    "Layer": 5,
+    "Components": [{
+        "Type": { "Id": "c895dbe72eb46ecb10d589d320151758", "Name": "TransformNode" },
+        "Properties": {
+            "parent": { "$TypeId": 9, "Id": "28302f384e114a66b3b83bc20cb1d7a4", "Name": "Canvas" }
+        }
+    }, {
+        "Type": { "Id": "70449d66178e0d9f66795c24f0fbbdfc", "Name": "TransformLocalPosition" }
+    }, {
+        "Type": { "Id": "2266a95f5d16ca1ddde710d7c047ba69", "Name": "TransformLocalRotation" }
+    }, {
+        "Type": { "Id": "f11fe490eefc969bbc3fde5eab5ccd1e", "Name": "TransformLocalScale" }
+    }, {
+        "Type": { "Id": "5ddde0b906f5f2c3b13d17f455d6ef5e", "Name": "RectTransform" }
+    }, {
+        "Type": { "Id": "617fd26299c944d58b61164e0c9c9353", "Name": "Text2DRenderer" },
+        "Properties": {
+            "style": { "$TypeId": 9, "Id": "499c998cfd2d489c85a63b438888f356", "Name": "Entity" },
+            "text": "Tap anywhere \nto start the game !"
+        }
+    }, {
+        "Type": { "Id": "ced0260f12f72499bae7fea4e1df92b7", "Name": "Text2DStyle" },
+        "Properties": {
+            "size": 40
+        }
+    }, {
+        "Type": { "Id": "0481d22c456081a992e7c7ee42da6c19", "Name": "Text2DStyleBitmapFont" },
+        "Properties": {
+            "font": { "$TypeId": 10, "Guid": "6f1b0202965b34f528dd313ad0578c47", "FileId": 11400000, "Type": 2 }
+        }
+    }, {
+        "Type": { "Id": "00d6bc791188d69186aa19bf8f6652a8", "Name": "RectTransformFinalSize" }
+    }, {
+        "Type": { "Id": "38350ed8ebd08cfd6dd9137832ed6391", "Name": "Text2DAutoFit" },
+        "Properties": {
+            "minSize": 4,
+            "maxSize": 100
+        }
+    }]
+}]

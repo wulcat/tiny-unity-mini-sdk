@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "dd797ed8b17446d784df5387aa7515c4",
+    "Name": "StartTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "dd797ed8b17446d784df5387aa7515c4", "Name": "StartTag" }
+    }
+}]

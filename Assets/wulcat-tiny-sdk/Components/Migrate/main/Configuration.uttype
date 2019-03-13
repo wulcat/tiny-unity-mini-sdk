@@ -1,0 +1,106 @@
+﻿[{
+    "$TypeId": 3,
+    "Id": "a5b8fcc5b45640dca948f53560b3b21e",
+    "Name": "Configuration",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "Documentation": {
+        "Summary": "Find a new method for restarting using systemBehaviour\n"
+    },
+    "TypeCode": "Configuration",
+    "Fields": [{
+        "Id": "faf6bb505201427c88be0c7870c20755",
+        "Name": "init",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "946adebbcaa641bba680d4e02f6ccc66",
+        "Name": "active",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "5356e5854d134b2b831bc02ac8fcfd1b",
+        "Name": "playable",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "95247f5ac4ab4410b3f944d240de4b9f",
+        "Name": "complete",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "1b57244191974130a0bac8212394a669",
+        "Name": "taskCompletionTime",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "9f1ef03530144301ae7433e14e86b6da",
+        "Name": "uiState",
+        "Documentation": {
+            "Summary": "Game always start with the OnStartGroup\n"
+        },
+        "FieldType": { "Id": "c35f09be92e340548656701870fd3314", "Name": "GameUIStateEnum" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "885f1f13a3274136a9f80a7867f4122b",
+        "Name": "loading",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "34fe9178f4444331ad47e6b2a89cff0d",
+        "Name": "loaded",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "bf3b17a6f37d4f5f85bdf88626e26904",
+        "Name": "stream_sprites",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" },
+        "Array": true,
+        "Visibility": 1,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "ca8ebd3c4aea4888af7cf1a559aec7b0",
+        "Name": "paused",
+        "FieldType": { "Id": "2b477f505af74487b7092b5617d88d3f", "Name": "Boolean" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "a5b8fcc5b45640dca948f53560b3b21e", "Name": "Configuration" },
+        "Properties": {
+            "init": false,
+            "taskCompletionTime": 30,
+            "stream_sprites": {
+                "Type": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" }
+            }
+        }
+    }
+}]

@@ -9,6 +9,7 @@
 //         data : CustomPhysics2DFilter
 
 //         OnEntityUpdate() :void {
+    // if(game.Service.isPaused) return
 //             let localPosition = this.data.position.position
 
 //             let rigidbody = this.data.rigidbody ,

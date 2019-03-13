@@ -1,0 +1,29 @@
+[{
+    "$TypeId": 3,
+    "Id": "72ed440e7b3149bb93204e5f06aeaa0d",
+    "Name": "Clock",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "2f644361d48e4265b2ad0b05fb588e99",
+        "Name": "time",
+        "FieldType": { "Id": "67325dccf2f047c19c7ef4a045354e67", "Name": "Float32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }, {
+        "Id": "74326d19a1e7477783ebc342243c1772",
+        "Name": "secondHand",
+        "FieldType": { "Id": "5a182d9d039d4dfd8fa96132d05f9ee7", "Name": "EntityReference" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "72ed440e7b3149bb93204e5f06aeaa0d", "Name": "Clock" }
+    }
+}]

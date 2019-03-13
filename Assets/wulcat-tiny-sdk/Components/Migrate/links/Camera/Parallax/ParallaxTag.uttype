@@ -1,0 +1,12 @@
+[{
+    "$TypeId": 3,
+    "Id": "80b1eac591b249628c140f8d01406a01",
+    "Name": "ParallaxTag",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "DefaultValue": {
+        "Type": { "Id": "80b1eac591b249628c140f8d01406a01", "Name": "ParallaxTag" }
+    }
+}]

@@ -1,0 +1,24 @@
+﻿[{
+    "$TypeId": 3,
+    "Id": "5c47d0e33d1c49c2a6e59ccdb87c0734",
+    "Name": "ScoreAmount",
+    "ExportFlags": 0,
+    "Unlisted": false,
+    "Visibility": 0,
+    "TypeCode": "Component",
+    "Fields": [{
+        "Id": "5b203522949c4f39836f77f02138644e",
+        "Name": "amount",
+        "FieldType": { "Id": "9633c95a0a68473682f09ed6a01194b4", "Name": "Int32" },
+        "Array": false,
+        "Visibility": 0,
+        "EditorOnly": false,
+        "Versioned": true
+    }],
+    "DefaultValue": {
+        "Type": { "Id": "5c47d0e33d1c49c2a6e59ccdb87c0734", "Name": "ScoreAmount" },
+        "Properties": {
+            "amount": 1
+        }
+    }
+}]
