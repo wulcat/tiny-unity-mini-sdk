@@ -2,7 +2,6 @@
 //     // NOTE: Work in progress
 //     export class CameraFollow extends ut.ComponentSystem {
 //         OnUpdate() : void {
-                // if(game.Service.isPaused) return
 //             this.world.forEach([game.CameraTag , ut.Entity , game.CameraFollowData , ut.Core2D.TransformLocalPosition] , (tag , entity , data , position)=>{
 //                 let targetPosition = this.world.getComponentData(data.target , ut.Core2D.TransformLocalPosition).position
 

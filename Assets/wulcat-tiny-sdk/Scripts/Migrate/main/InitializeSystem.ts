@@ -108,14 +108,13 @@ It should not go inside the namespace.
 })();
 
 window.onblur = ()=>{
-    game.Service.setPause = true
+    game.Service.pause()
     document.title = "blur"
 }
 window.onfocus = ()=>{
-    game.Service.setPause = false
+    game.Service.resume()
     document.title = "focus"
 }
-
 namespace game { 
     export class InitializeSystem extends ut.ComponentSystem {
         OnUpdate() :void {

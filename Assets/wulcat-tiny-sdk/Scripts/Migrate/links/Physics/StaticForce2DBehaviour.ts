@@ -7,7 +7,6 @@ namespace game {
         data : StaticForce2DFilter 
 
         OnEntityUpdate() {
-            if(game.Service.isPaused) return
             let localPosition = this.data.position.position ,
                 localVelocity = new Vector3(this.data.force.velocity.x , this.data.force.velocity.y)
 

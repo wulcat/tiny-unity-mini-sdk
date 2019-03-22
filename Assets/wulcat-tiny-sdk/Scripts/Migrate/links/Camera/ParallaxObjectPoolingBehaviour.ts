@@ -12,7 +12,6 @@
 
 //         OnEntityUpdate() : void {
 
-    // if(game.Service.isPaused) return
 //             let target = this.data.parallaxObjectPooling.cameraEntity ,
 //                 bounds = app.Service.TransformService.getScreenToWorldRect(this.world , target)
 

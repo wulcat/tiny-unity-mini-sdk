@@ -1,7 +1,6 @@
 namespace game {
     export class CrossButtonSystem extends ut.ComponentSystem {
         OnUpdate() :  void {
-            // if(game.Service.isPaused) return
             let config = game.Service.getConfig(this.world)
 
             // Once game time passes 30 secs we set game to complete and pop up a close button

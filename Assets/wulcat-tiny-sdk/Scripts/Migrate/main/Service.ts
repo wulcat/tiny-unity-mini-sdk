@@ -13,12 +13,27 @@ namespace game {
             return game.Service.camera
         }
 
-        private static _isPaused : boolean
-        static set setPause(value : boolean) {
-            this._isPaused =  value
+        // s// use this method for in game pause
+        // private static _isPaused : boolean //= true
+        // static get isPaused() : boolean {
+        //     return this.world.scheduler().isPaused()
+        // }
+
+        // static set setPause(value : boolean) {
+        //     console.log("%c Pause Status : "+this.world.scheduler().isPaused() , 'background: #33ccff; color: #ffffff')
+
+        //     if(this.world.scheduler().isPaused())
+                
+        //     else
+                
+        // }
+        static pause() {
+            console.log("%c Pause Status : true", 'background: #33ccff; color: #ffffff')
+            this.world.scheduler().pause()
         }
-        static get isPaused() : boolean{
-            return this._isPaused
+        static resume() {
+            console.log("%c Pause Status : false", 'background: #33ccff; color: #ffffff')
+            this.world.scheduler().resume()
         }
 
         // If it already exists it destroys it and creates new .

@@ -1,7 +1,6 @@
 namespace game {
     export class DragSystem extends ut.ComponentSystem {
         OnUpdate() : void {
-            // if(game.Service.isPaused) return
             let config = game.Service.getConfig(this.world)
             let record = game.Service.getRecord()
             

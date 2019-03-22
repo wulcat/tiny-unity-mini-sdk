@@ -9,7 +9,6 @@
 //     export class DragUIBehaviour extends ut.ComponentBehaviour {
 //         data : DragUIFilter
 //         OnEntityUpdate() :void {
-    // if(game.Service.isPaused) return
 //             if(!this.data.draggable.canDrag) return
 
 //             if(ut.Core2D.Input.isTouchSupported() && ut.Core2D.Input.touchCount() > 0) {

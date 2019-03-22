@@ -1,7 +1,6 @@
 namespace game {
     export class TimerSystem extends ut.ComponentSystem {
         OnUpdate() : void {
-            // if(game.Service.isPaused) return
             let config = this.world.getConfigData(game.Configuration)
 
             if(!config.active) return

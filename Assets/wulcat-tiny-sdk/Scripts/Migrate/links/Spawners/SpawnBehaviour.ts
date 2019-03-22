@@ -22,7 +22,6 @@ namespace game {
         }
 
         OnEntityUpdate() {
-            // if(game.Service.isPaused) return
 
             let config = game.Service.getConfig(this.world)
             if(!config.active) return

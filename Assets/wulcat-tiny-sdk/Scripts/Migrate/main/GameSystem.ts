@@ -1,8 +1,6 @@
 namespace game {
     export class GameSystem extends ut.ComponentSystem {
-        OnUpdate():void {
-            if(game.Service.isPaused) return
-            
+        OnUpdate():void {            
             let config = game.Service.getConfig(this.world)
             let record = game.Service.getRecord()
 

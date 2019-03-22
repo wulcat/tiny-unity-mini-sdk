@@ -28,7 +28,6 @@ namespace ut
         }
         
         OnUpdate(): void {
-            // if(game.Service.isPaused) return
             // let dt = this.scheduler.deltaTime();
             let dt = 0.02
             Time._deltaTime = dt;

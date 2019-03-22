@@ -7,7 +7,6 @@ namespace game {
     export class FitScreenLayoutSystem extends ut.ComponentSystem {
         
         OnUpdate():void {
-            if(game.Service.isPaused) return
             
             let displayInfo = this.world.getConfigData(ut.Core2D.DisplayInfo);
             let aspectRatio = displayInfo.height / displayInfo.width;

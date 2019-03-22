@@ -1,7 +1,6 @@
 // namespace game {
 //     export class ClockSystem extends ut.ComponentSystem {
 //         OnUpdate() : void {
-    // if(game.Service.isPaused) return
 //             let config = this.world.getConfigData(game.Configuration)
 //             if(!config.active) {
 //                 ut.Time.reset()
