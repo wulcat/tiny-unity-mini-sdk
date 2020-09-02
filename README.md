@@ -1,6 +1,9 @@
 # tiny-unity-mini-sdk
 A workaround to quickly build games in current preview package of tiny unity project in Typescript
 
+## Status
+Obsolete due to DOTS c# implementation in newer tiny unity
+
 ## How do i get started ?
 Will update very soon with some samples for using the components .
 
